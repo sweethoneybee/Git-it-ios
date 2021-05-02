@@ -1,0 +1,11 @@
+disabled_rules:
+- trailing_whitespace
+- line_length
+included:
+- Git-it
+
+excluded:
+- Pods
+- Git-it/AppDelegate.swift
+- Git-it/SceneDelegate.swift
+
