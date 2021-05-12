@@ -13,7 +13,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setUI()
         
-        print("이 줄은 스쿼시를 위한 임시 줄입니다. 나중에 삭제해도 됩니다")
+        print("이 줄은 스쿼시를 위한 임시 줄입니다.")
     }
 
     private func setUI() {
