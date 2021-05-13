@@ -140,7 +140,7 @@
         <!--LoginViewController-->
         <scene sceneID="IIV-nj-cBy">
             <objects>
-                <viewController id="sWj-ps-msR" userLabel="LoginViewController" sceneMemberID="viewController">
+                <viewController id="sWj-ps-msR" userLabel="LoginViewController" customClass="LoginViewController" customModule="Git_it" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NRQ-rw-DPd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
