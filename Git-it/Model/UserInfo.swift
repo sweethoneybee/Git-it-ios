@@ -7,12 +7,14 @@
 
 import Foundation
 
-class UserInfo {
+struct UserInfo {
     enum Key: String {
         case username = "USER_NAME"
         case friendList = "FRIEND_LIST"
         case profileImageData = "USER_PHOTO_IMAGE_DATA"
     }
+    
+    private init() {}
     
     static var username: String? {
         get {
