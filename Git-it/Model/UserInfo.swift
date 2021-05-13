@@ -18,39 +18,32 @@ struct UserInfo {
     
     static var username: String? {
         get {
-            let userDefaults = UserDefaults.standard
-            return userDefaults.string(forKey: Key.username.rawValue)
+            return UserDefaults.standard.string(forKey: Key.username.rawValue)
         }
         set {
-            let userDefaults = UserDefaults.standard
-            userDefaults.set(newValue, forKey: Key.username.rawValue)
+            UserDefaults.standard.set(newValue, forKey: Key.username.rawValue)
         }
     }
     
     static var friendList: [String]? {
         get {
-            let userDefaults = UserDefaults.standard
-            return userDefaults.stringArray(forKey: Key.friendList.rawValue)
+            return UserDefaults.standard.stringArray(forKey: Key.friendList.rawValue)
         }
         set {
-            let userDefaults = UserDefaults.standard
-            userDefaults.set(newValue, forKey: Key.friendList.rawValue)
+            UserDefaults.standard.set(newValue, forKey: Key.friendList.rawValue)
         }
     }
     
     static var profileImageData: Data? {
         get {
-            let userDefaults = UserDefaults.standard
-            return userDefaults.data(forKey: Key.profileImageData.rawValue)
+            return UserDefaults.standard.data(forKey: Key.profileImageData.rawValue)
         }
         set {
-            let userDefaults = UserDefaults.standard
-            userDefaults.set(newValue, forKey: Key.profileImageData.rawValue)
+            UserDefaults.standard.set(newValue, forKey: Key.profileImageData.rawValue)
         }
     }
     
     static func remove(forKey key: UserInfo.Key) {
-        let userDefaults = UserDefaults.standard
-        userDefaults.removeObject(forKey: key.rawValue)
+        UserDefaults.standard.removeObject(forKey: key.rawValue)
     }
 }
