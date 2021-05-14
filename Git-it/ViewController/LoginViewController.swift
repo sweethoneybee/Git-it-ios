@@ -57,12 +57,24 @@ class LoginViewController: UIViewController {
         button.setTitleColor(UIColor.black, for: .normal)
         button.backgroundColor = UIColor.white
         
+        button.addTarget(self, action: #selector(touchUpBtnSubmmitLater), for: UIControl.Event.touchUpInside)
+        
         btnSubmitLater = button
         self.view.addSubview(button)
     }
     
     @IBAction func touchUpBtnSubmmit() {
         UserInfo.username = textFieldUsername.text
+        
+        gotoMain()
+    }
+    
+    @IBAction func touchUpBtnSubmmitLater() {
+        gotoMain()
+    }
+    
+    func gotoMain() {
+        guard let nextVC = self.storyboard?.instantiateViewController(identifier: "main") else {return}; self.present(nextVC, animated: true)
     }
     
     override func viewDidLoad() {
