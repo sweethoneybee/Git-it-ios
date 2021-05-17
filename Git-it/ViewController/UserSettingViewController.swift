@@ -34,7 +34,6 @@ class UserSettingViewController: UIViewController {
     
     func addUserProfileImage() {
         let imageView: UIImageView = { imageView in
-            imageView.frame = CGRect(x: 134, y: 165, width: 100, height: 100)
             if let data = UserInfo.profileImageData {
                 imageView.image = UIImage(data: data)
             } else {
@@ -57,7 +56,6 @@ class UserSettingViewController: UIViewController {
     private func addUserNameField() {
         let textField: UITextField = { textField in
             textField.isEnabled = false
-            textField.frame = CGRect(x: 86, y: 282, width: 190, height: 30)
             textField.text =  UserInfo.Key.username.rawValue
             textField.textAlignment = .center
             
@@ -76,7 +74,6 @@ class UserSettingViewController: UIViewController {
     
     func addDoneButton() {
         let button: UIButton = { button in
-            button.frame = CGRect(x: 32, y: 366, width: 292, height: 48)
             button.setTitle("DONE", for: .normal)
             
             button.setTitleColor(UIColor.black, for: .normal)
@@ -100,7 +97,6 @@ class UserSettingViewController: UIViewController {
     
     func addEditButton() {
         let button: UIButton = { button in
-            button.frame = CGRect(x: 286, y: 282, width: 30, height: 30)
             button.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
             button.tintColor = UIColor.blue
             
@@ -119,7 +115,6 @@ class UserSettingViewController: UIViewController {
     
     func addCancelButton() {
         let button: UIButton = { button in
-            button.frame = CGRect(x: 20, y: 30, width: 60, height: 30)
             button.setTitle("Cancel", for: .normal)
             button.setTitleColor(UIColor.black, for: .normal)
             
@@ -180,4 +175,3 @@ class UserSettingViewController: UIViewController {
     */
 
 }
-

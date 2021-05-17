@@ -61,7 +61,7 @@
         <!--SettingViewController-->
         <scene sceneID="svs-34-LcN">
             <objects>
-                <viewController id="Xrp-M4-EcZ" userLabel="SettingViewController" sceneMemberID="viewController">
+                <viewController id="Xrp-M4-EcZ" userLabel="SettingViewController" customClass="UserSettingViewController" customModule="Git_it" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="phq-Kf-dor">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
