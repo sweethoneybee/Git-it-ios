@@ -7,14 +7,15 @@
 
 import UIKit
 
-class UserSettingViewController: UIViewController {
+class UserSettingViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Property
     
     var userNameField: UITextField!
     var userProfileImage: UIImageView!
     var doneButton: UIButton!
-    var cancelButton: UIButton!
+    var leftCancelButton: UIBarButtonItem!
+    var rightDoneButton: UIBarButtonItem!
     var editButton: UIButton!
     
     // MARK: ViewLoad
@@ -23,11 +24,15 @@ class UserSettingViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
         addUserProfileImage()
         addUserNameField()
         addDoneButton()
         addEditButton()
-        addCancelButton()
+        setRightDoneButton()
+        setLeftCancelButton()
+        
+        self.userNameField.delegate = self
     }
     
     // MARK: UIFunction
@@ -54,9 +59,8 @@ class UserSettingViewController: UIViewController {
     }
     
     private func addUserNameField() {
-        let textField: UITextField = { textField in
-            textField.isEnabled = false
-            textField.text =  UserInfo.Key.username.rawValue
+        userNameField = { textField in
+            textField.text = UserInfo.username
             textField.textAlignment = .center
             
             textField.translatesAutoresizingMaskIntoConstraints = false
@@ -65,15 +69,15 @@ class UserSettingViewController: UIViewController {
             return textField
         }(UITextField())
         
-        self.view.addSubview(textField)
+        self.view.addSubview(userNameField)
         
         userNameField.topAnchor.constraint(equalTo: userProfileImage.bottomAnchor, constant: 17).isActive = true
         userNameField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 86).isActive = true
-        userNameField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -106).isActive = true
+        userNameField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -86).isActive = true
     }
     
     func addDoneButton() {
-        let button: UIButton = { button in
+        doneButton = { button in
             button.setTitle("DONE", for: .normal)
             
             button.setTitleColor(UIColor.black, for: .normal)
@@ -87,7 +91,7 @@ class UserSettingViewController: UIViewController {
             return button
         }(UIButton())
         
-        self.view.addSubview(button)
+        self.view.addSubview(doneButton)
         
         doneButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         doneButton.topAnchor.constraint(equalTo: userNameField.bottomAnchor, constant: 46).isActive = true
@@ -96,41 +100,30 @@ class UserSettingViewController: UIViewController {
     }
     
     func addEditButton() {
-        let button: UIButton = { button in
+        editButton = { button in
             button.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
             button.tintColor = UIColor.blue
             
             button.addTarget(self, action: #selector(touchUpEditButton(_:)), for: .touchUpInside)
-            button.translatesAutoresizingMaskIntoConstraints = false
             
             editButton = button
             return button
         }(UIButton())
         
-        self.view.addSubview(button)
-        
-        editButton.centerYAnchor.constraint(equalTo: userNameField.centerYAnchor).isActive = true
-        editButton.leadingAnchor.constraint(equalTo: userNameField.trailingAnchor, constant: 0).isActive = true
+        userNameField.rightView = editButton
+        userNameField.rightViewMode = UITextField.ViewMode.always
     }
     
-    func addCancelButton() {
-        let button: UIButton = { button in
-            button.setTitle("Cancel", for: .normal)
-            button.setTitleColor(UIColor.black, for: .normal)
-            
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.addTarget(self, action: #selector(touchUpCancelButton(_:)), for: .touchUpInside)
-            
-            cancelButton = button
-            return button
-        }(UIButton())
-        
-        self.view.addSubview(button)
-        
-        cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 3).isActive = true
-        cancelButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
+    func setLeftCancelButton() {
+        leftCancelButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(touchUpCancelButton(_:)))
+        self.navigationItem.leftBarButtonItem = leftCancelButton
     }
-    
+
+    func setRightDoneButton() {
+        rightDoneButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(touchUpDoneButton(_:)))
+        self.navigationItem.rightBarButtonItem = rightDoneButton
+    }
+
     // MARK: Function
     
     func gotoMain() {
@@ -139,6 +132,11 @@ class UserSettingViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     // MARK: IBAction
@@ -153,15 +151,7 @@ class UserSettingViewController: UIViewController {
     }
     
     @IBAction func touchUpEditButton(_ sender: UIButton) {
-        userNameField.isEnabled = !userNameField.isEnabled
-        if userNameField.isEnabled {
-            editButton.tintColor = UIColor.gray
-            userNameField.textColor = UIColor.blue
-        } else {
-            editButton.tintColor = UIColor.blue
-            userNameField.textColor = UIColor.gray
-        }
-        // 에딧 버튼을 누르는 과정에서 해당 아이디가 존재하는지에 대한 여부를 판단 해야할거 같음
+        self.userNameField.becomeFirstResponder()
     }
     
     /*
