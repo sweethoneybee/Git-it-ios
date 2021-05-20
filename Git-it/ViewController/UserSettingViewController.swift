@@ -22,8 +22,6 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
         addUserProfileImage()
         addUserNameField()
