@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     // MARK: property
     var labelUserName: UILabel = UILabel()
     var textFieldUsername: UITextField = UITextField()
@@ -22,6 +22,10 @@ class LoginViewController: UIViewController {
         self.addTextFieldUsername()
         self.addBtnSubmit()
         self.addBtnSubmitLater()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     // MARK: UI setting mothod
@@ -41,9 +45,11 @@ class LoginViewController: UIViewController {
         textFieldUsername = {textField in
             textField.frame = CGRect(x: 60, y: 360, width: 280, height: 40)
             textField.borderStyle = .roundedRect
+            textField.delegate = self
+            textField.addTarget(self, action: #selector(setBtnSubmitEnable), for: UIControl.Event.editingChanged)
             return textField
         }(UITextField())
-        
+
         self.view.addSubview(textFieldUsername)
     }
     
@@ -52,9 +58,10 @@ class LoginViewController: UIViewController {
             button.frame = CGRect(x: 60, y: 430, width: 280, height: 40)
             button.setTitle("SUBMIT", for: .normal)
             button.setTitleColor(UIColor.black, for: .normal)
-            button.backgroundColor = UIColor.gray
             button.layer.cornerRadius = 8
             button.addTarget(self, action: #selector(touchUpBtnSubmit), for: UIControl.Event.touchUpInside)
+            button.backgroundColor = UIColor.lightGray
+            button.isUserInteractionEnabled = false
             return button
         }(UIButton())
         
@@ -84,9 +91,25 @@ class LoginViewController: UIViewController {
         gotoMainTabBar()
     }
     
+    @objc func setBtnSubmitEnable() {
+        if textFieldUsername.text != "" {
+            buttonSubmit.isUserInteractionEnabled = true
+            buttonSubmit.backgroundColor = UIColor.gray
+        } else {
+            buttonSubmit.isUserInteractionEnabled = false
+            buttonSubmit.backgroundColor = UIColor.lightGray
+        }
+    }
+    
     // MARK: method
     func gotoMainTabBar() {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "MainTabBar") else {return}
+        nextVC.modalPresentationStyle = .fullScreen
         self.present(nextVC, animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }
