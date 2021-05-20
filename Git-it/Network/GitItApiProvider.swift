@@ -7,8 +7,24 @@
 
 import Foundation
 
+enum ApiError: LocalizedError {
+    case noUsernameError
+    case clientError(Error)
+    case serverError(URLResponse?)
+    case unknownError
+    
+    var errorDescription: String? {
+        switch self {
+        case .noUsernameError: return "no username error"
+        case .clientError: return "client error"
+        case .serverError: return "server error"
+        case .unknownError: return "unknown error"
+        }
+    }
+}
+
 enum GitItApi {
-    case commitsSummary
+    case commitsSummary(String)
     case social
     case stats
     
@@ -22,14 +38,18 @@ enum GitItApi {
         }
     }
     
-    var url: URL { URL(string: GitItApi.baseUrl + self.path)! }
+    var queryItem: String {
+        switch self {
+        case .commitsSummary(let username): return "?username=\(username)"
+        case .social: return ""
+        case .stats: return ""
+        }
+    }
+    
+    var url: URL { URL(string: GitItApi.baseUrl + self.path + self.queryItem)! }
 }
 
-enum ApiError: LocalizedError {
-    case unknownError
-    var errorDescription: String? { "unknownError" }
-}
-
+// MARK:- APIs
 class GitItApiProvider {
     let session: URLSession
     init(session: URLSession = .shared) {
@@ -37,12 +57,21 @@ class GitItApiProvider {
     }
     
     func fetchCommitsSummary(completion: @escaping (Result<commitsSummary, Error>) -> Void) {
-        let request = URLRequest(url: GitItApi.commitsSummary.url)
+        guard let username = UserInfo.username else {
+            completion(.failure(ApiError.noUsernameError))
+            return
+        }
         
-        let task: URLSessionTask = self.session.dataTask(with: request) { data, urlResponse, error in
-            guard let response = urlResponse as? HTTPURLResponse,
-               (200...399).contains(response.statusCode) else {
-                completion(.failure(error ?? ApiError.unknownError))
+        let request = URLRequest(url: GitItApi.commitsSummary(username).url)
+        let task: URLSessionTask = self.session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(ApiError.clientError(error)))
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+               (200...399).contains(httpResponse.statusCode) else {
+                completion(.failure(ApiError.serverError(response)))
                 return
             }
             
