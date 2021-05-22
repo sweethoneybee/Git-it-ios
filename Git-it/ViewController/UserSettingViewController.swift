@@ -61,6 +61,8 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
             textField.textAlignment = .center
             
             textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.autocorrectionType = .no
+            textField.autocapitalizationType = .none
            
             return textField
         }(UITextField())
@@ -79,6 +81,7 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
             button.setTitleColor(UIColor.black, for: .normal)
             button.backgroundColor = UIColor.gray
             button.layer.cornerRadius = 8
+            button.isEnabled = false
             
             button.addTarget(self, action: #selector(touchUpDoneButton(_:)), for: .touchUpInside)
             button.translatesAutoresizingMaskIntoConstraints = false
@@ -97,7 +100,7 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
     private func addEditButton() {
         editButton = { button in
             button.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
-            button.tintColor = UIColor.blue
+            button.tintColor = UIColor.systemBlue
             
             button.addTarget(self, action: #selector(touchUpEditButton(_:)), for: .touchUpInside)
             
@@ -115,6 +118,7 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
 
     private func setRightDoneButton() {
         rightDoneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(touchUpDoneButton(_:)))
+        rightDoneButton.isEnabled = false
         self.navigationItem.rightBarButtonItem = rightDoneButton
     }
 
@@ -133,6 +137,28 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let utf8Char = string.cString(using: .utf8)
+        let isBackSpace = strcmp(utf8Char, "\\b")
+        if string.hasCharacters() || isBackSpace == -92 {
+            let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+            if !text.isEmpty && text != UserInfo.username {
+                
+                doneButton.isEnabled = true
+                rightDoneButton.isEnabled = true
+                
+                doneButton.backgroundColor = UIColor.systemBlue
+                
+            } else {
+                doneButton.isEnabled = false
+                rightDoneButton.isEnabled = false
+            }
+
+            return true
+        }
+        return false
     }
     
     // MARK: IBAction
@@ -160,4 +186,18 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
     }
     */
 
+}
+
+extension String {
+    func hasCharacters() -> Bool {
+        do {
+            let regex = try NSRegularExpression(pattern: "^[0-9a-zA-Z_]$", options: .caseInsensitive)
+            if let _ = regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: NSMakeRange(0, self.count)) {
+                return true
+            }
+        } catch {
+            return false
+        }
+        return false
+    }
 }
