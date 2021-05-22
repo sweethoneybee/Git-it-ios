@@ -49,14 +49,14 @@ enum GitItApi {
     var url: URL { URL(string: GitItApi.baseUrl + self.path + self.queryItem)! }
 }
 
-// MARK:- APIs
+// MARK: - APIs
 class GitItApiProvider {
     let session: URLSession
     init(session: URLSession = .shared) {
         self.session = session
     }
     
-    func fetchCommitsSummary(completion: @escaping (Result<commitsSummary, Error>) -> Void) {
+    func fetchCommitsSummary(completion: @escaping (Result<CommitsSummary, Error>) -> Void) {
         guard let username = UserInfo.username else {
             completion(.failure(ApiError.noUsernameError))
             return
@@ -75,7 +75,7 @@ class GitItApiProvider {
                 return
             }
             
-            if let data = data, let commitsSummary = try? JSONDecoder().decode(commitsSummary.self, from: data) {
+            if let data = data, let commitsSummary = try? JSONDecoder().decode(CommitsSummary.self, from: data) {
                 completion(.success(commitsSummary))
                 return
             }

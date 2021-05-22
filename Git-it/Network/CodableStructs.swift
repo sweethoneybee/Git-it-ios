@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct commitsSummary: Decodable {
+struct CommitsSummary: Decodable {
     var validation: String
     var username: String
-    var commitsRecord: [commitsRecord]
+    var commitsRecord: [CommitsRecord]
     var profileImageUrl: String
     var commitStreak: Int
 }
 
-struct commitsRecord: Decodable {
+struct CommitsRecord: Decodable {
     var count: Int
     var date: String
     var level: Int
