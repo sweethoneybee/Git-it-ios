@@ -35,8 +35,8 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: UIFunction
     
-    func addUserProfileImage() {
-        let imageView: UIImageView = { imageView in
+    private func addUserProfileImage() {
+        userProfileImage = { imageView in
             if let data = UserInfo.profileImageData {
                 imageView.image = UIImage(data: data)
             } else {
@@ -44,11 +44,10 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
             }
             
             imageView.translatesAutoresizingMaskIntoConstraints = false
-            userProfileImage = imageView
             return imageView
         }(UIImageView())
         
-        self.view.addSubview(imageView)
+        self.view.addSubview(userProfileImage)
         
         userProfileImage.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
         userProfileImage.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 165).isActive = true
@@ -62,8 +61,7 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
             textField.textAlignment = .center
             
             textField.translatesAutoresizingMaskIntoConstraints = false
-            
-            userNameField = textField
+           
             return textField
         }(UITextField())
         
@@ -74,7 +72,7 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
         userNameField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -86).isActive = true
     }
     
-    func addDoneButton() {
+    private func addDoneButton() {
         doneButton = { button in
             button.setTitle("DONE", for: .normal)
             
@@ -85,7 +83,6 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
             button.addTarget(self, action: #selector(touchUpDoneButton(_:)), for: .touchUpInside)
             button.translatesAutoresizingMaskIntoConstraints = false
             
-            doneButton = button
             return button
         }(UIButton())
         
@@ -97,14 +94,13 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
         doneButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -86).isActive = true
     }
     
-    func addEditButton() {
+    private func addEditButton() {
         editButton = { button in
             button.setImage(UIImage(systemName: "square.and.pencil"), for: .normal)
             button.tintColor = UIColor.blue
             
             button.addTarget(self, action: #selector(touchUpEditButton(_:)), for: .touchUpInside)
             
-            editButton = button
             return button
         }(UIButton())
         
@@ -112,21 +108,23 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
         userNameField.rightViewMode = UITextField.ViewMode.always
     }
     
-    func setLeftCancelButton() {
-        leftCancelButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(touchUpCancelButton(_:)))
+    private func setLeftCancelButton() {
+        leftCancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(touchUpCancelButton(_:)))
         self.navigationItem.leftBarButtonItem = leftCancelButton
     }
 
-    func setRightDoneButton() {
-        rightDoneButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(touchUpDoneButton(_:)))
+    private func setRightDoneButton() {
+        rightDoneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(touchUpDoneButton(_:)))
         self.navigationItem.rightBarButtonItem = rightDoneButton
     }
 
     // MARK: Function
     
-    func gotoMain() {
+    private func gotoMain() {
         navigationController?.popViewController(animated: true)
     }
+    
+    // MARK: UITextFieldDelegate Methods
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
