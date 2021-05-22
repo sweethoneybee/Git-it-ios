@@ -46,7 +46,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             textField.frame = CGRect(x: 60, y: 360, width: 280, height: 40)
             textField.borderStyle = .roundedRect
             textField.delegate = self
-            textField.addTarget(self, action: #selector(setBtnSubmitEnable), for: UIControl.Event.editingChanged)
+            textField.autocapitalizationType = .none
+            textField.autocorrectionType = .no
             return textField
         }(UITextField())
 
@@ -90,17 +91,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @objc func touchUpBtnSubmitLater() {
         gotoMainTabBar()
     }
-    
-    @objc func setBtnSubmitEnable() {
-        if textFieldUsername.text != "" {
-            buttonSubmit.isUserInteractionEnabled = true
-            buttonSubmit.backgroundColor = UIColor.gray
-        } else {
-            buttonSubmit.isUserInteractionEnabled = false
-            buttonSubmit.backgroundColor = UIColor.lightGray
-        }
-    }
-    
+
     // MARK: method
     func gotoMainTabBar() {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "MainTabBar") else {return}
@@ -111,5 +102,37 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+        let utf8Char = string.cString(using: .utf8)
+        let isBackSpace = strcmp(utf8Char, "\\b")
+        
+        if string.hasCharacters() || isBackSpace == -92 {
+            if !text.isEmpty {
+                buttonSubmit.isUserInteractionEnabled = true
+                buttonSubmit.backgroundColor = UIColor.gray
+            } else {
+                buttonSubmit.isUserInteractionEnabled = false
+                buttonSubmit.backgroundColor = UIColor.lightGray
+            }
+            return true
+        }
+        return false
+    }
+}
+
+extension String {
+    func hasCharacters() -> Bool {
+        do {
+            let regex = try NSRegularExpression(pattern: "^[0-9a-zA-Z_]$", options: .caseInsensitive)
+            if regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: NSRange(location: 0, length: self.count)) != nil {
+                return true
+            }
+        } catch {
+            return false
+        }
+        return false
     }
 }
