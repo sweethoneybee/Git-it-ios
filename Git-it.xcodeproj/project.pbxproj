@@ -21,6 +21,8 @@
 		4054FCED264C40880021ADD4 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4054FCEA264C3EE80021ADD4 /* UserInfo.swift */; };
 		8AD53A370C33430FC683BA1A /* Pods_Git_it.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 749690446B456AA87F2148D7 /* Pods_Git_it.framework */; };
 		C01AA7F6264D140A008AA5C5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01AA7F5264D140A008AA5C5 /* LoginViewController.swift */; };
+		F4F6597426511C010088932B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6597326511C010088932B /* UserSettingViewController.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		44574CB07ED315AC10A6C62D /* Pods-Git-it.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Git-it.debug.xcconfig"; path = "Target Support Files/Pods-Git-it/Pods-Git-it.debug.xcconfig"; sourceTree = "<group>"; };
 		749690446B456AA87F2148D7 /* Pods_Git_it.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Git_it.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C01AA7F5264D140A008AA5C5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		F4F6597326511C010088932B /* UserSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +146,7 @@
 			children = (
 				4045B5A7263E498A00BE3A31 /* ViewController.swift */,
 				C01AA7F5264D140A008AA5C5 /* LoginViewController.swift */,
+				F4F6597326511C010088932B /* UserSettingViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -357,6 +362,7 @@
 				4045B5A4263E498A00BE3A31 /* AppDelegate.swift in Sources */,
 				4045B5A6263E498A00BE3A31 /* SceneDelegate.swift in Sources */,
 				4054FCED264C40880021ADD4 /* UserInfo.swift in Sources */,
+				F4F6597426511C010088932B /* UserSettingViewController.swift in Sources */,
 				4045B5AE263E498A00BE3A31 /* Git_it.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
