@@ -8,13 +8,13 @@
 import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
-    // MARK: property
-    var labelUserName: UILabel = UILabel()
-    var textFieldUsername: UITextField = UITextField()
-    var buttonSubmit: UIButton = UIButton()
-    var buttonSubmitLater: UIButton = UIButton()
+    // MARK: - property
+    var labelUserName: UILabel?
+    var textFieldUsername: UITextField?
+    var buttonSubmit: UIButton?
+    var buttonSubmitLater: UIButton?
     
-    // MARK: override method
+    // MARK: - override method
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +28,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-    // MARK: UI setting mothod
+    // MARK: - UI setting mothod
     func addLabelUsername() {
         labelUserName = {label in
             label.frame = CGRect(x: 55, y: 300, width: 200, height: 40)
@@ -38,7 +38,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return label
         }(UILabel())
         
-        self.view.addSubview(labelUserName)
+        if let label = labelUserName {
+            self.view.addSubview(label)
+        }
     }
     
     func addTextFieldUsername() {
@@ -50,8 +52,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             textField.autocorrectionType = .no
             return textField
         }(UITextField())
-
-        self.view.addSubview(textFieldUsername)
+      
+        if let textField = textFieldUsername {
+            self.view.addSubview(textField)
+        }
     }
     
     func addBtnSubmit() {
@@ -66,7 +70,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return button
         }(UIButton())
         
-        self.view.addSubview(buttonSubmit)
+        if let button = buttonSubmit {
+            self.view.addSubview(button)
+        }
     }
     
     func addBtnSubmitLater() {
@@ -79,12 +85,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             return button
         }(UIButton())
         
-        self.view.addSubview(buttonSubmitLater)
+        if let button = buttonSubmitLater {
+            self.view.addSubview(button)
+        }
     }
     
-    // MARK: objc method
+    // MARK: - objc method
     @objc func touchUpBtnSubmit() {
-        UserInfo.username = textFieldUsername.text
+        if let textField = textFieldUsername {
+            UserInfo.username = textField.text
+        }
         gotoMainTabBar()
     }
     
@@ -92,7 +102,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         gotoMainTabBar()
     }
 
-    // MARK: method
+    // MARK: - method
     func gotoMainTabBar() {
         guard let nextVC = self.storyboard?.instantiateViewController(identifier: "MainTabBar") else {return}
         nextVC.modalPresentationStyle = .fullScreen
@@ -110,12 +120,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let isBackSpace = strcmp(utf8Char, "\\b")
         
         if string.hasCharacters() || isBackSpace == -92 {
-            if !text.isEmpty {
-                buttonSubmit.isUserInteractionEnabled = true
-                buttonSubmit.backgroundColor = UIColor.gray
-            } else {
-                buttonSubmit.isUserInteractionEnabled = false
-                buttonSubmit.backgroundColor = UIColor.lightGray
+            if let button = buttonSubmit {
+                if !text.isEmpty {
+                    button.isUserInteractionEnabled = true
+                    button.backgroundColor = UIColor.gray
+                } else {
+                    button.isUserInteractionEnabled = false
+                    button.backgroundColor = UIColor.lightGray
+                }
             }
             return true
         }
