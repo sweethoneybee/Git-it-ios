@@ -140,7 +140,7 @@
         <!--LoginViewController-->
         <scene sceneID="IIV-nj-cBy">
             <objects>
-                <viewController id="sWj-ps-msR" userLabel="LoginViewController" sceneMemberID="viewController">
+                <viewController id="sWj-ps-msR" userLabel="LoginViewController" customClass="LoginViewController" customModule="Git_it" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NRQ-rw-DPd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -158,7 +158,7 @@
         <!--MainTabBarController-->
         <scene sceneID="hJD-Yr-Eek">
             <objects>
-                <tabBarController id="jhO-g9-Yq1" userLabel="MainTabBarController" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainTabBar" id="jhO-g9-Yq1" userLabel="MainTabBarController" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="kgY-F0-Vel">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
