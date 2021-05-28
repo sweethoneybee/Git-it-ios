@@ -52,7 +52,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             textField.autocorrectionType = .no
             return textField
         }(UITextField())
-        
+      
         if let textField = textFieldUsername {
             self.view.addSubview(textField)
         }
@@ -131,7 +131,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
             return true
         }
-        
         return false
     }
 }
