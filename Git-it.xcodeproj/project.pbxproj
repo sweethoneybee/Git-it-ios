@@ -372,7 +372,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				40A6001326553A3200F503FB /* CodableStructs.swift in Sources */,
 				4045B5A8263E498A00BE3A31 /* ViewController.swift in Sources */,
 				4045B5A4263E498A00BE3A31 /* AppDelegate.swift in Sources */,
 				40A6001126537FDF00F503FB /* GitItApiProvider.swift in Sources */,
@@ -381,6 +380,7 @@
 				401A733E26660D2A0087592E /* MockURLSession.swift in Sources */,
 				4054FCED264C40880021ADD4 /* UserInfo.swift in Sources */,
 				4045B5AE263E498A00BE3A31 /* Git_it.xcdatamodeld in Sources */,
+				40A6001326553A3200F503FB /* CodableStructs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
