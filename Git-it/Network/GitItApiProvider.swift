@@ -30,13 +30,13 @@ enum GitItApi {
     case social
     case stats(String)
     
-    static let baseUrl = "http://임시url입니다.수정.예정"
+    static let baseUrl = "http://testurl.will.replace/"
     
     var path: String {
         switch self {
-        case .commitsSummary: return "/commitsSummary"
-        case .social: return "/social"
-        case .stats: return "/stats"
+        case .commitsSummary: return "commitsSummary/"
+        case .social: return "social/"
+        case .stats: return "stats/"
         }
     }
     
@@ -64,8 +64,8 @@ enum GitItApi {
      }
  */
 class GitItApiProvider {
-    let session: URLSession
-    init(session: URLSession = .shared) {
+    let session: URLSessionProtocol
+    init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
     

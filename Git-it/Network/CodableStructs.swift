@@ -16,7 +16,7 @@ struct CommitsSummary: Decodable {
     var commitStreak: Int
 }
 
-struct CommitsRecord: Decodable {
+struct CommitsRecord: Decodable, Equatable {
     var count: Int
     var date: String
     var level: Int
