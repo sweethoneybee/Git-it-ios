@@ -24,24 +24,19 @@ class GrassCollectionViewCell: UICollectionViewCell {
     var commitLevel: Int?
     
     func setColor() {
-        print("setColor")
-        
         switch commitLevel {
         case 0:
             self.backgroundColor = UIColor(displayP3Red: 235/255, green: 237/255, blue: 240/255, alpha: 1)
-            print("case 0")
         case 1:
             self.backgroundColor = UIColor(displayP3Red: 172/255, green: 230/255, blue: 174/255, alpha: 1)
-            print("case 1")
         case 2:
             self.backgroundColor = UIColor(displayP3Red: 105/255, green: 192/255, blue: 110/255, alpha: 1)
-            print("case 2")
         case 3:
             self.backgroundColor = UIColor(displayP3Red: 83/255, green: 158/255, blue: 87/255, alpha: 1)
-            print("case 3")
-        default:
+        case 4:
             self.backgroundColor = UIColor(displayP3Red: 56/255, green: 108/255, blue: 62/255, alpha: 1)
-            print("case d")
+        default:
+            self.backgroundColor = UIColor(displayP3Red: 235/255, green: 237/255, blue: 240/255, alpha: 1)
         }
     }
 }

@@ -31,6 +31,7 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
             
             // test code
             label.text = "string"
+            
             label.font = UIFont.boldSystemFont(ofSize: CGFloat(30))
             
             label.translatesAutoresizingMaskIntoConstraints = false
@@ -50,7 +51,6 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
         grassCollectionView?.delegate = self
         grassCollectionView?.dataSource = self
         
-        // test code
         grassCollectionView?.backgroundColor = UIColor.white
                 
         if let grass = grassCollectionView {

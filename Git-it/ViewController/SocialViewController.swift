@@ -34,7 +34,7 @@ class SocialViewController: UIViewController, UITableViewDataSource {
     private func addFriendAddButton() {
         friendAddButton = { addButton in
             
-            let largeConfig = UIImage.SymbolConfiguration(pointSize: 50, weight: .bold, scale: .large)
+            let largeConfig = UIImage.SymbolConfiguration(pointSize: 40, weight: .bold, scale: .large)
             let largeBoldDoc = UIImage(systemName: "plus.circle.fill", withConfiguration: largeConfig)
             addButton.setImage(largeBoldDoc, for: .normal)
             addButton.tintColor = UIColor.systemBlue
@@ -100,8 +100,8 @@ class SocialViewController: UIViewController, UITableViewDataSource {
             tableView.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor).isActive = true
             tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
             
-            addButton.bottomAnchor.constraint(equalTo: tableView.frameLayoutGuide.bottomAnchor, constant: 15).isActive = true
-            addButton.trailingAnchor.constraint(equalTo: tableView.frameLayoutGuide.trailingAnchor, constant: 7).isActive = true
+            addButton.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: -10).isActive = true
+            addButton.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -15).isActive = true
         }
     }
     
