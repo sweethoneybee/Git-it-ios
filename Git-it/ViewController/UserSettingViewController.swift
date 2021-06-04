@@ -38,13 +38,17 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
     
     private func addUserProfileImage() {
         userProfileImage = { imageView in
-            if let data = UserInfo.profileImageData {
-                imageView.image = UIImage(data: data)
-            } else {
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            guard let key = UserInfo.profileImageKey else {
+                //set default
                 imageView.image = UIImage(named: "profile.png")
+                return imageView
             }
             
-            imageView.translatesAutoresizingMaskIntoConstraints = false
+            ImageCache.shared.load(url: key as NSURL) { profileImage in
+                imageView.image = profileImage
+            }
+            
             return imageView
         }(UIImageView())
         

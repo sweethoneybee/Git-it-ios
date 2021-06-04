@@ -27,7 +27,7 @@ class ImageCache {
         }
         
         URLSession.shared.dataTask(with: url as URL) { data, response, error in
-            if let _ = error {
+            if error != nil {
                 DispatchQueue.main.async {
                     completionHandler(nil)
                     return
