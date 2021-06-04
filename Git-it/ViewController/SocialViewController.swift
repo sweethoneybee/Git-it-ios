@@ -72,25 +72,34 @@ class SocialViewController: UIViewController, UITableViewDataSource {
     // MARK: - Function
     
     func updateFriends() {
-        OperationQueue().addOperation {
-            GitItApiProvider().fetchCommitsSummary { result in
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(let commitSummary):
-                    self.userCommitsSummery = commitSummary
-                }
+        self.userCommitsSummery = try? JSONDecoder().decode(CommitsSummary.self, from: GitItApi.commitsSummary("jeong").sampleData)
+        self.friendsCommitsSummary = try? JSONDecoder().decode([SocialCommitsSummary].self, from: GitItApi.social.sampleData)
+        
+        if let friends = friendsCommitsSummary {
+            var list: [String] = []
+            for friend in friends {
+                list.append(friend.username)
             }
-            
-            GitItApiProvider().fetchSocialCommitsSummary { result in
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(let commitsSummary):
-                    self.friendsCommitsSummary = commitsSummary
-                }
-            }
+            UserInfo.friendList = list
         }
+//        OperationQueue().addOperation {
+//            GitItApiProvider().fetchCommitsSummary { result in
+//                switch result {
+//                case .failure(let error):
+//                    print(error)
+//                case .success(let commitSummary):
+//                    self.userCommitsSummery = commitSummary
+//                }
+//            }
+//
+//            GitItApiProvider().fetchSocialCommitsSummary { result in
+//                switch result {
+//                case .failure(let error):
+//                    print(error)
+//                case .success(let commitsSummary):
+//                    self.friendsCommitsSummary = commitsSummary
+//                }
+//            }
     }
     
     func setAutoLayout() {
@@ -124,14 +133,26 @@ class SocialViewController: UIViewController, UITableViewDataSource {
             cell.userName = UserInfo.username
             cell.indexOfFriend = 1
             cell.userCommitsSummery = userCommitsSummery
-            print("indexpath.row = \(indexPath.row)")
-        default:
+            
+            cell.setcurrentDateIndex()
+            cell.addUserNameLabel()
+            cell.addGrassCollectionView()
+            cell.collectionViewCellFlowLayout()
+            cell.setAutoLayout()
+        case 1, 2, 3, 4:
             if let friends = friendsList, let summary = friendsCommitsSummary {
                 cell.userName = friends[indexPath.row - 1]
-                cell.indexOfFriend = indexPath.row + 2
+                cell.indexOfFriend = indexPath.row + 1
                 cell.commitSummary = summary[indexPath.row - 1]
-                print("indexpath.row = \(indexPath.row)")
+                
+                cell.setcurrentDateIndex()
+                cell.addUserNameLabel()
+                cell.addGrassCollectionView()
+                cell.collectionViewCellFlowLayout()
+                cell.setAutoLayout()
             }
+        default:
+            return cell
         }
         return cell
     }
