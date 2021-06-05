@@ -107,7 +107,7 @@
         <!--StatsViewController-->
         <scene sceneID="6PT-V5-Lsa">
             <objects>
-                <viewController id="z62-vA-fDQ" userLabel="StatsViewController" sceneMemberID="viewController">
+                <viewController id="z62-vA-fDQ" userLabel="StatsViewController" customClass="StatsViewController" customModule="Git_it" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pi7-Fp-6TD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
