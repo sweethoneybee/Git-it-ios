@@ -76,7 +76,9 @@ class SocialViewController: UIViewController, UITableViewDataSource {
     
     func updateFriends() {
         self.userCommitsSummery = try? JSONDecoder().decode(CommitsSummary.self, from: GitItApi.commitsSummary("jeong").sampleData)
-        self.friendsCommitsSummary = try? JSONDecoder().decode([SocialCommitsSummary].self, from: GitItApi.social.sampleData)
+        
+        let tempFriendsCommitsSummary = try? JSONDecoder().decode([SocialCommitsSummary].self, from: GitItApi.social.sampleData)
+        self.friendsCommitsSummary = tempFriendsCommitsSummary?.sorted(by: {$0.commitsRecord.count > $1.commitsRecord.count})
         
         if let friends = friendsCommitsSummary {
             var list: [String] = []

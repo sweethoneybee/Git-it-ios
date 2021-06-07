@@ -67,6 +67,11 @@ extension GitItApi {
                     "count": 5,
                     "date": "2021-05-06",
                     "level": 2
+                  },
+                  {
+                    "count": 5,
+                    "date": "2021-05-07",
+                    "level": 3
                   }
                 ]
               }
