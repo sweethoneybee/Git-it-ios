@@ -13,8 +13,6 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
     
     static let identifier = "SocialViewFriendsTableViewCell"
     var userNameLabel: UILabel?
-    var commitSummary: SocialCommitsSummary?
-    var userCommitsSummery: CommitsSummary?
     var grassCollectionView: GrassCollectionView?
     var currentDateIndex: Int {
         let numPerLine = 53
@@ -33,6 +31,7 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
     
     var indexOfFriend: Int?
     var userName: String?
+    var userCommitRecords: [CommitsRecord]?
     
     // MARK: - UIFunction
     
@@ -67,19 +66,6 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
         }
     }
     
-//    func setcurrentDateIndex() {
-//
-//            let numPerLine = 52 // Int((self.contentView.bounds.width - 20) / ((self.contentView.bounds.height - 14) / 7 + 2))
-//            let cal = Calendar(identifier: .gregorian)
-//            let now = Date()
-//            let comp = cal.dateComponents([.weekday], from: now)
-//
-//            print(",,,,,\(numPerLine)")
-//
-//            self.currentDateIndex = ((numPerLine-1)*7 - 1) + comp.weekday!
-//
-//    }
-    
     func collectionViewCellFlowLayout() {
         let flowLayout: UICollectionViewFlowLayout
         flowLayout = UICollectionViewFlowLayout()
@@ -101,9 +87,9 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
             label.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10).isActive = true
             
             collectionView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10).isActive = true
-            collectionView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 10).isActive = true
-            collectionView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
-            collectionView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
+            collectionView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
+            collectionView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10).isActive = true
+            collectionView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10).isActive = true
         }
     }
     
@@ -115,6 +101,12 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        let bottomSpace: CGFloat = 10.0
+        self.contentView.frame = self.contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: bottomSpace, right: 0))
     }
 }
 
@@ -136,8 +128,8 @@ extension SocialViewFriendsTableViewCell: UICollectionViewDelegate, UICollection
             preconditionFailure("fail to load cell")
         }
         
-        if let user = userCommitsSummery {
-            for userdata in user.commitsRecord {
+        if let records = userCommitRecords {
+            for userdata in records {
                 guard let commitDate = dateFormatter.date(from: userdata.date) else { return GrassCollectionViewCell() }
                 let date = Date()
                 let nowDateStr = dateFormatter.string(from: date)
@@ -148,31 +140,9 @@ extension SocialViewFriendsTableViewCell: UICollectionViewDelegate, UICollection
                 if indexOfCell < 0 {
                     break
                 }
-                    
+                
                 if indexPath.item == indexOfCell {
                     cell.commitLevel = userdata.level
-                    break
-                } else {
-                    cell.commitLevel = -1
-                }
-            }
-        }
-        
-        if let friend = commitSummary {
-            for friendData in friend.commitsRecord {
-                guard let commitDate = dateFormatter.date(from: friendData.date) else { return GrassCollectionViewCell() }
-                let date = Date()
-                let nowDateStr = dateFormatter.string(from: date)
-                let nowDate = dateFormatter.date(from: nowDateStr)
-                let diff = nowDate!.timeIntervalSince(commitDate)
-                
-                let indexOfCell = currentDateIndex - Int(diff / (60 * 60 * 24))
-                if indexOfCell < 0 {
-                    break
-                }
-                    
-                if indexPath.item == indexOfCell {
-                    cell.commitLevel = friendData.level
                     break
                 } else {
                     cell.commitLevel = -1

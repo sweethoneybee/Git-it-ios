@@ -61,6 +61,9 @@ class SocialViewController: UIViewController, UITableViewDataSource {
             tableView.rowHeight = CGFloat(200)
             tableView.estimatedRowHeight = CGFloat(200)
             
+            tableView.separatorStyle = .none
+            tableView.allowsSelection = false
+            
             return tableView
         }(UITableView())
         
@@ -110,7 +113,7 @@ class SocialViewController: UIViewController, UITableViewDataSource {
             tableView.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor).isActive = true
             
             addButton.bottomAnchor.constraint(equalTo: tableView.bottomAnchor, constant: -10).isActive = true
-            addButton.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -15).isActive = true
+            addButton.trailingAnchor.constraint(equalTo: tableView.trailingAnchor, constant: -10).isActive = true
         }
     }
     
@@ -132,7 +135,7 @@ class SocialViewController: UIViewController, UITableViewDataSource {
         case 0:
             cell.userName = UserInfo.username
             cell.indexOfFriend = 1
-            cell.userCommitsSummery = userCommitsSummery
+            cell.userCommitRecords = userCommitsSummery?.commitsRecord
             
             cell.addUserNameLabel()
             cell.addGrassCollectionView()
@@ -143,7 +146,7 @@ class SocialViewController: UIViewController, UITableViewDataSource {
             if let friends = friendsList, let summary = friendsCommitsSummary {
                 cell.userName = friends[indexPath.row - 1]
                 cell.indexOfFriend = indexPath.row + 1
-                cell.commitSummary = summary[indexPath.row - 1]
+                cell.userCommitRecords = summary[indexPath.row - 1].commitsRecord
                 
                 cell.addUserNameLabel()
                 cell.addGrassCollectionView()
@@ -156,10 +159,36 @@ class SocialViewController: UIViewController, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if indexPath.row != 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print("delete")
+            // request delete
+            // reload data
+        }
+    }
+    
     // MARK: - IBAction
 
     @IBAction func touchUpAddButton(_ sender: UIButton) {
-        // todo : 5인 이상 제한, 뷰 넘어가기
+        
+        if let list = friendsList {
+            if list.count > 4 {
+                let alert = UIAlertController(title: "알림", message: "친구는 최대 5명까지 추가 가능합니다.", preferredStyle: UIAlertController.Style.alert)
+                let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
+                alert.addAction(action)
+                self.present(alert, animated: true, completion: nil)
+            } else {
+                // move to next view
+            }
+        }
     }
     /*
     // MARK: - Navigation
