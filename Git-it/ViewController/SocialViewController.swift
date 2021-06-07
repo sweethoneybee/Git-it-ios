@@ -134,18 +134,17 @@ class SocialViewController: UIViewController, UITableViewDataSource {
             cell.indexOfFriend = 1
             cell.userCommitsSummery = userCommitsSummery
             
-            cell.setcurrentDateIndex()
             cell.addUserNameLabel()
             cell.addGrassCollectionView()
             cell.collectionViewCellFlowLayout()
             cell.setAutoLayout()
+            
         case 1, 2, 3, 4:
             if let friends = friendsList, let summary = friendsCommitsSummary {
                 cell.userName = friends[indexPath.row - 1]
                 cell.indexOfFriend = indexPath.row + 1
                 cell.commitSummary = summary[indexPath.row - 1]
                 
-                cell.setcurrentDateIndex()
                 cell.addUserNameLabel()
                 cell.addGrassCollectionView()
                 cell.collectionViewCellFlowLayout()

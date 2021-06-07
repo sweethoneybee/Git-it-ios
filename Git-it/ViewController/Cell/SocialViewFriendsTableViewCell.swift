@@ -16,7 +16,14 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
     var commitSummary: SocialCommitsSummary?
     var userCommitsSummery: CommitsSummary?
     var grassCollectionView: GrassCollectionView?
-    var currentDateIndex: Int?
+    var currentDateIndex: Int {
+        let numPerLine = 53
+        let cal = Calendar(identifier: .gregorian)
+        let now = Date()
+        let comp = cal.dateComponents([.weekday], from: now)
+        
+        return ((numPerLine-1)*7 - 1) + comp.weekday!
+    }
     var dateFormatter: DateFormatter {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "YYYY-MM-dd"
@@ -42,7 +49,6 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
         }(UILabel())
         
         if let label = userNameLabel {
-            print("label added")
             contentView.addSubview(label)
         }
     }
@@ -61,18 +67,18 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
         }
     }
     
-    func setcurrentDateIndex() {
-        
-            let numPerLine = 16 // Int((self.contentView.bounds.width - 20) / ((self.contentView.bounds.height - 14) / 7 + 2))
-            let cal = Calendar(identifier: .gregorian)
-            let now = Date()
-            let comp = cal.dateComponents([.weekday], from: now)
-            
-            print(",,,,,\(numPerLine)")
-            
-            self.currentDateIndex = ((numPerLine-1)*7 - 1) + comp.weekday!
-        
-    }
+//    func setcurrentDateIndex() {
+//
+//            let numPerLine = 52 // Int((self.contentView.bounds.width - 20) / ((self.contentView.bounds.height - 14) / 7 + 2))
+//            let cal = Calendar(identifier: .gregorian)
+//            let now = Date()
+//            let comp = cal.dateComponents([.weekday], from: now)
+//
+//            print(",,,,,\(numPerLine)")
+//
+//            self.currentDateIndex = ((numPerLine-1)*7 - 1) + comp.weekday!
+//
+//    }
     
     func collectionViewCellFlowLayout() {
         let flowLayout: UICollectionViewFlowLayout
@@ -83,6 +89,10 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
         flowLayout.scrollDirection = .horizontal
 
         self.grassCollectionView?.collectionViewLayout = flowLayout
+        
+        DispatchQueue.main.async {
+            self.grassCollectionView?.scrollToItem(at: IndexPath(item: self.currentDateIndex - 1, section: 0), at: .centeredHorizontally, animated: false)
+            }
     }
     
     func setAutoLayout() {
@@ -92,8 +102,8 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
             
             collectionView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10).isActive = true
             collectionView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: 10).isActive = true
-            collectionView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10).isActive = true
-            collectionView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: 10).isActive = true
+            collectionView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor).isActive = true
+            collectionView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor).isActive = true
         }
     }
     
@@ -101,11 +111,6 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-//        addUserNameLabel()
-//        addGrassCollectionView()
-//        collectionViewCellFlowLayout()
-//        setAutoLayout()
-        setcurrentDateIndex()
     }
     
     required init?(coder: NSCoder) {
@@ -123,67 +128,59 @@ extension SocialViewFriendsTableViewCell: UICollectionViewDelegate, UICollection
         }
         
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // return 30
-        let numPerLine = 16 //Int((collectionView.bounds.width - 20) / ((collectionView.bounds.height - 14) / 7 + 2))
-        return 7 * numPerLine
+        return currentDateIndex + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // 날짜에 따라 레벨을 넣어주기
         guard let cell: GrassCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: GrassCollectionViewCell.identifier, for: indexPath) as? GrassCollectionViewCell else {
             preconditionFailure("fail to load cell")
         }
         
         if let user = userCommitsSummery {
-            // 유저의 정보
             for userdata in user.commitsRecord {
                 guard let commitDate = dateFormatter.date(from: userdata.date) else { return GrassCollectionViewCell() }
                 let date = Date()
                 let nowDateStr = dateFormatter.string(from: date)
-                
                 let nowDate = dateFormatter.date(from: nowDateStr)
-                
                 let diff = nowDate!.timeIntervalSince(commitDate)
                 
-                if let index = currentDateIndex {
-                    let indexOfCell = index - Int(diff / (60 * 60 * 24))
-                    if indexOfCell < 0 {
-                        break
-                    }
+                let indexOfCell = currentDateIndex - Int(diff / (60 * 60 * 24))
+                if indexOfCell < 0 {
+                    break
+                }
                     
-                    if indexPath.item == indexOfCell {
-                        cell.commitLevel = userdata.level
-                    }
+                if indexPath.item == indexOfCell {
+                    cell.commitLevel = userdata.level
+                    break
+                } else {
+                    cell.commitLevel = -1
                 }
             }
         }
         
         if let friend = commitSummary {
-            // 친구의 정보
             for friendData in friend.commitsRecord {
                 guard let commitDate = dateFormatter.date(from: friendData.date) else { return GrassCollectionViewCell() }
                 let date = Date()
                 let nowDateStr = dateFormatter.string(from: date)
                 let nowDate = dateFormatter.date(from: nowDateStr)
-                
                 let diff = nowDate!.timeIntervalSince(commitDate)
-                if let index = currentDateIndex {
-                    let indexOfCell = index - Int(diff / (60 * 60 * 24))
+                
+                let indexOfCell = currentDateIndex - Int(diff / (60 * 60 * 24))
+                if indexOfCell < 0 {
+                    break
+                }
                     
-                    if indexOfCell < 0 {
-                        break
-                    }
-                    
-                    if indexPath.item == indexOfCell {
-                        cell.commitLevel = friendData.level
-                    }
+                if indexPath.item == indexOfCell {
+                    cell.commitLevel = friendData.level
+                    break
+                } else {
+                    cell.commitLevel = -1
                 }
             }
         }
         
-        // cell.commitLevel = 1
         cell.setColor()
-        
         return cell
     }
 }
