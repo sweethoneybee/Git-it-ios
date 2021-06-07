@@ -13,7 +13,6 @@ class SocialViewController: UIViewController, UITableViewDataSource {
     
     var friendAddButton: UIButton?
     var friendsTableView: UITableView?
-    var friendsList: [String]?
     var friendsCommitsSummary: [SocialCommitsSummary]?
     var userCommitsSummery: CommitsSummary?
     
@@ -121,7 +120,6 @@ class SocialViewController: UIViewController, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let friends = UserInfo.friendList {
-            friendsList = friends
             return friends.count + 1
         } else {
             return 1
@@ -145,7 +143,7 @@ class SocialViewController: UIViewController, UITableViewDataSource {
             cell.setAutoLayout()
             
         case 1, 2, 3, 4:
-            if let friends = friendsList, let summary = friendsCommitsSummary {
+            if let friends = UserInfo.friendList, let summary = friendsCommitsSummary {
                 cell.userName = friends[indexPath.row - 1]
                 cell.indexOfFriend = indexPath.row + 1
                 cell.userCommitRecords = summary[indexPath.row - 1].commitsRecord
@@ -181,7 +179,7 @@ class SocialViewController: UIViewController, UITableViewDataSource {
 
     @IBAction func touchUpAddButton(_ sender: UIButton) {
         
-        if let list = friendsList {
+        if let list = UserInfo.friendList {
             if list.count > 4 {
                 let alert = UIAlertController(title: "알림", message: "친구는 최대 5명까지 추가 가능합니다.", preferredStyle: UIAlertController.Style.alert)
                 let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
