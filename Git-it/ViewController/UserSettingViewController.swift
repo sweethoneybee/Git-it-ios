@@ -45,7 +45,7 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
                 return imageView
             }
             
-            ImageCache.shared.load(url: key as NSURL) { profileImage in
+            ImageCache.shared.load(url: key) { profileImage in
                 imageView.image = profileImage
             }
             

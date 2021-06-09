@@ -23,7 +23,7 @@ class ImageCache_Tests: XCTestCase {
 
     func test_ImageCacheLoadSuccess() {
         let expectation = XCTestExpectation()
-        if let key = UserInfo.profileImageKey as NSURL? {
+        if let key = UserInfo.profileImageKey {
             ImageCache.shared.load(url: key) { image in
                 XCTAssertEqual(self.testImage, image)
                 expectation.fulfill()

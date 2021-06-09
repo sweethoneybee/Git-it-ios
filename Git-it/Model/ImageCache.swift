@@ -14,11 +14,12 @@ class ImageCache {
     static let shared: ImageCache = ImageCache()
     private let cachedImages = NSCache<NSURL, UIImage>()
     
-    func image(url: NSURL) -> UIImage? {
+    func image(url: URL) -> UIImage? {
+        let url = url as NSURL
         return cachedImages.object(forKey: url)
     }
     
-    func load(url: NSURL, completionHandler: @escaping (UIImage?) -> Void ) {
+    func load(url: URL, completionHandler: @escaping (UIImage?) -> Void ) {
         if let image = self.image(url: url) {
             DispatchQueue.main.async {
                 completionHandler(image)
@@ -26,7 +27,7 @@ class ImageCache {
             return
         }
         
-        URLSession.shared.dataTask(with: url as URL) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, response, error in
             if error != nil {
                 DispatchQueue.main.async {
                     completionHandler(nil)
@@ -42,7 +43,7 @@ class ImageCache {
                         completionHandler(nil)
                         return
                     }
-                    self.cachedImages.setObject(image, forKey: url)
+                    self.cachedImages.setObject(image, forKey: url as NSURL)
                     completionHandler(image)
                     return
                 }
