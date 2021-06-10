@@ -13,8 +13,7 @@ class SocialViewController: UIViewController, UITableViewDataSource {
     
     var friendAddButton: UIButton?
     var friendsTableView: UITableView?
-    var friendsCommitsSummary: [SocialCommitsSummary]?
-    var userCommitsSummery: CommitsSummary?
+    var commitsSummary: [SocialCommitsSummary]?
     
     // MARK: - ViewLoad
 
@@ -74,36 +73,46 @@ class SocialViewController: UIViewController, UITableViewDataSource {
     // MARK: - Function
     
     func updateFriends() {
-        self.userCommitsSummery = try? JSONDecoder().decode(CommitsSummary.self, from: GitItApi.commitsSummary("jeong").sampleData)
         
-        let tempFriendsCommitsSummary = try? JSONDecoder().decode([SocialCommitsSummary].self, from: GitItApi.social.sampleData)
-        self.friendsCommitsSummary = tempFriendsCommitsSummary?.sorted(by: {$0.commitsRecord.count > $1.commitsRecord.count})
+        // test code
         
-        if let friends = friendsCommitsSummary {
-            var list: [String] = []
-            for friend in friends {
-                list.append(friend.username)
+//        if let data = try? JSONDecoder().decode(CommitsSummary.self, from: GitItApi.commitsSummary(UserInfo.username!).sampleData) {
+//            let tempUserCommitSummery: SocialCommitsSummary = SocialCommitsSummary(validation: "VALID", username: data.username, commitsRecord: data.commitsRecord)
+//            self.commitsSummary = [tempUserCommitSummery]
+//        }
+//        if let tempFriendsCommitsSummary = try? JSONDecoder().decode([SocialCommitsSummary].self, from: GitItApi.social.sampleData) {
+//            self.commitsSummary?.append(contentsOf: tempFriendsCommitsSummary)
+//            self.commitsSummary = self.commitsSummary?.sorted(by: {$0.commitsRecord.count > $1.commitsRecord.count})
+//        }
+//        if let datas = commitsSummary {
+//            var list: [String] = []
+//            for userName in datas {
+//                list.append(userName.username)
+//            }
+//            UserInfo.friendList = list
+//        }
+        
+        OperationQueue().addOperation {
+            GitItApiProvider().fetchCommitsSummary { result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let commitSummary):
+                    let tempUserCommitSummary: SocialCommitsSummary = SocialCommitsSummary(validation: "VALID", username: commitSummary.username, commitsRecord: commitSummary.commitsRecord)
+                    self.commitsSummary = [tempUserCommitSummary]
+                }
             }
-            UserInfo.friendList = list
+
+            GitItApiProvider().fetchSocialCommitsSummary { result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let commitsSummary):
+                    self.commitsSummary?.append(contentsOf: commitsSummary)
+                    self.commitsSummary = self.commitsSummary?.sorted(by: {$0.commitsRecord.count > $1.commitsRecord.count})
+                }
+            }
         }
-//        OperationQueue().addOperation {
-//            GitItApiProvider().fetchCommitsSummary { result in
-//                switch result {
-//                case .failure(let error):
-//                    print(error)
-//                case .success(let commitSummary):
-//                    self.userCommitsSummery = commitSummary
-//                }
-//            }
-//
-//            GitItApiProvider().fetchSocialCommitsSummary { result in
-//                switch result {
-//                case .failure(let error):
-//                    print(error)
-//                case .success(let commitsSummary):
-//                    self.friendsCommitsSummary = commitsSummary
-//                }
-//            }
     }
     
     func setAutoLayout() {
@@ -119,10 +128,10 @@ class SocialViewController: UIViewController, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let friends = UserInfo.friendList {
-            return friends.count + 1
+        if let list = self.commitsSummary {
+            return list.count
         } else {
-            return 1
+            return 0
         }
     }
     
@@ -131,48 +140,15 @@ class SocialViewController: UIViewController, UITableViewDataSource {
             preconditionFailure("fail to load cell")
         }
         
-        switch indexPath.row {
-        case 0:
-            cell.userName = UserInfo.username
-            cell.indexOfFriend = 1
-            cell.userCommitRecords = userCommitsSummery?.commitsRecord
-            
-            cell.addUserNameLabel()
-            cell.addGrassCollectionView()
-            cell.collectionViewCellFlowLayout()
-            cell.setAutoLayout()
-            
-        case 1, 2, 3, 4:
-            if let friends = UserInfo.friendList, let summary = friendsCommitsSummary {
-                cell.userName = friends[indexPath.row - 1]
-                cell.indexOfFriend = indexPath.row + 1
-                cell.userCommitRecords = summary[indexPath.row - 1].commitsRecord
-                
-                cell.addUserNameLabel()
-                cell.addGrassCollectionView()
-                cell.collectionViewCellFlowLayout()
-                cell.setAutoLayout()
-            }
-        default:
-            return cell
+        if let userData = self.commitsSummary {
+            print("count \(userData.count)")
+    
+            cell.userName = userData[indexPath.row].username
+            cell.indexOfFriend = indexPath.row + 1
+            cell.userCommitRecords = userData[indexPath.row].commitsRecord
+            cell.userNameLabel?.text = "\(indexPath.row + 1). \(userData[indexPath.row].username)"
         }
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.row != 0 {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            print("delete")
-            // request delete
-            // reload data
-        }
     }
     
     // MARK: - IBAction

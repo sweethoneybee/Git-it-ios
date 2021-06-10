@@ -21,9 +21,8 @@ class GrassCollectionViewCell: UICollectionViewCell {
     }
     
     static let identifier = "grassCollectionViewCell"
-    var commitLevel: Int?
     
-    func setColor() {
+    func setColor(commitLevel: Int) {
         switch commitLevel {
         case 0:
             self.backgroundColor = UIColor(displayP3Red: 235/255, green: 237/255, blue: 240/255, alpha: 1)

@@ -9,6 +9,20 @@ import UIKit
 
 class SocialViewFriendsTableViewCell: UITableViewCell {
     
+    // MARK: - Init
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        addUserNameLabel()
+        addGrassCollectionView()
+        collectionViewCellFlowLayout()
+        setAutoLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Property
     
     static let identifier = "SocialViewFriendsTableViewCell"
@@ -22,12 +36,6 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
         
         return ((numPerLine-1)*7 - 1) + comp.weekday!
     }
-    var dateFormatter: DateFormatter {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "YYYY-MM-dd"
-
-        return dateFormatter
-    }
     
     var indexOfFriend: Int?
     var userName: String?
@@ -37,10 +45,6 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
     
     func addUserNameLabel() {
         userNameLabel = { label in
-            if let index = indexOfFriend, let name = userName {
-                label.text = "\(index). \(name)"
-            }
-            
             label.font = UIFont.boldSystemFont(ofSize: CGFloat(30))
             
             label.translatesAutoresizingMaskIntoConstraints = false
@@ -69,9 +73,8 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
     func collectionViewCellFlowLayout() {
         let flowLayout: UICollectionViewFlowLayout
         flowLayout = UICollectionViewFlowLayout()
-        flowLayout.minimumInteritemSpacing = 2 // 아이템간의 거리가 10보다는 크게
-        flowLayout.minimumLineSpacing = 2 // 줄 간의 거리가 10보다는 크게
-        
+        flowLayout.minimumInteritemSpacing = 2
+        flowLayout.minimumLineSpacing = 2
         flowLayout.scrollDirection = .horizontal
 
         self.grassCollectionView?.collectionViewLayout = flowLayout
@@ -91,16 +94,6 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
             collectionView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10).isActive = true
             collectionView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10).isActive = true
         }
-    }
-    
-    // MARK: - Init
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     override func layoutSubviews() {
@@ -129,28 +122,36 @@ extension SocialViewFriendsTableViewCell: UICollectionViewDelegate, UICollection
         }
         
         if let records = userCommitRecords {
-            for userdata in records {
-                guard let commitDate = dateFormatter.date(from: userdata.date) else { return GrassCollectionViewCell() }
-                let date = Date()
-                let nowDateStr = dateFormatter.string(from: date)
-                let nowDate = dateFormatter.date(from: nowDateStr)
-                let diff = nowDate!.timeIntervalSince(commitDate)
-                
-                let indexOfCell = currentDateIndex - Int(diff / (60 * 60 * 24))
-                if indexOfCell < 0 {
-                    break
-                }
-                
-                if indexPath.item == indexOfCell {
-                    cell.commitLevel = userdata.level
-                    break
-                } else {
-                    cell.commitLevel = -1
-                }
-            }
+            cell.setColor(commitLevel: records[indexPath.item].level)
+            
+            // test code
+//            for userdata in records {
+//                var dateFormatter: DateFormatter {
+//                    let dateFormatter = DateFormatter()
+//                    dateFormatter.dateFormat = "YYYY-MM-dd"
+//                    return dateFormatter
+//                }
+//
+//                guard let commitDate = dateFormatter.date(from: userdata.date) else { return GrassCollectionViewCell() }
+//                let date = Date()
+//                let nowDateStr = dateFormatter.string(from: date)
+//                let nowDate = dateFormatter.date(from: nowDateStr)
+//                let diff = nowDate!.timeIntervalSince(commitDate)
+//
+//                let indexOfCell = currentDateIndex - Int(diff / (60 * 60 * 24))
+//                if indexOfCell < 0 {
+//                    break
+//                }
+//
+//                if indexPath.item == indexOfCell {
+//                    cell.setColor(commitLevel: userdata.level)
+//                    break
+//                } else {
+//                    cell.setColor(commitLevel: 0)
+//                }
+//            }
         }
-        
-        cell.setColor()
+
         return cell
     }
 }
