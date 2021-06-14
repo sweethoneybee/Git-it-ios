@@ -45,7 +45,7 @@
         <!--HomeViewController-->
         <scene sceneID="50f-0J-5h3">
             <objects>
-                <viewController id="oKX-xs-hLq" userLabel="HomeViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeView" id="oKX-xs-hLq" userLabel="HomeViewController" customClass="HomeViewController" customModule="Git_it" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3yM-CX-mE7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -61,7 +61,7 @@
         <!--SettingViewController-->
         <scene sceneID="svs-34-LcN">
             <objects>
-                <viewController id="Xrp-M4-EcZ" userLabel="SettingViewController" customClass="UserSettingViewController" customModule="Git_it" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SettingView" id="Xrp-M4-EcZ" userLabel="SettingViewController" customClass="UserSettingViewController" customModule="Git_it" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="phq-Kf-dor">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
