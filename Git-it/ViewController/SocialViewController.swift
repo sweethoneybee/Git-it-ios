@@ -92,7 +92,7 @@ class SocialViewController: UIViewController, UITableViewDataSource {
 //            UserInfo.friendList = list
 //        }
         
-        OperationQueue().addOperation {
+        DispatchQueue.main.async {
             GitItApiProvider().fetchCommitsSummary { result in
                 switch result {
                 case .failure(let error):
