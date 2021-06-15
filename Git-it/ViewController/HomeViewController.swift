@@ -267,8 +267,8 @@ class HomeViewController: UIViewController {
         // test code
         
         self.userData = try? JSONDecoder().decode(CommitsSummary.self, from: GitItApi.commitsSummary(UserInfo.username!).sampleData)
-//
-//        OperationQueue().addOperation {
+        
+//        DispatchQueue.main.async {
 //            GitItApiProvider().fetchCommitsSummary { result in
 //                switch result {
 //                case .failure(let error):
