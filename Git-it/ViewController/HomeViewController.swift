@@ -149,9 +149,9 @@ class HomeViewController: UIViewController {
         commitStreakCountLabel = { label in
             label.translatesAutoresizingMaskIntoConstraints = false
             if let data = userData {
-                label.text = "\(data.commitStreak)"
+                label.text = "\(data.commitStreak) days"
             } else {
-                label.text = "0"
+                label.text = "0 days"
             }
             label.font = UIFont.boldSystemFont(ofSize: 40)
             return label
@@ -269,7 +269,7 @@ class HomeViewController: UIViewController {
             if let name = userNameLabel, let todayCommit = todayCommitCountLabel, let commitStreak = commitStreakCountLabel, let grass = grassCollectionView {
                 name.text = data.username
                 todayCommit.text = "\(data.commitsRecord.count)"
-                commitStreak.text = "\(data.commitStreak)"
+                commitStreak.text = "\(data.commitStreak) days"
                 
 //            ImageCache.shared.load(url: key) { profileImage in
 //                imageView.image = profileImage
