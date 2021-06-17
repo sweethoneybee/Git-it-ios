@@ -52,23 +52,6 @@ class HomeViewController: UIViewController {
         userNameLabel?.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        updateUserData()
-        if let data = userData {
-            if let name = userNameLabel, let todayCommit = todayCommitCountLabel, let commitStreak = commitStreakCountLabel, let grass = grassCollectionView {
-                name.text = data.username
-                todayCommit.text = "\(data.commitsRecord.count)"
-                commitStreak.text = "\(data.commitStreak)"
-                
-//            ImageCache.shared.load(url: key) { profileImage in
-//                imageView.image = profileImage
-//            }"
-                
-                grass.reloadData()
-            }
-        }
-    }
-    
     // MARK: - UIFunction
     
     func addSettingButton() {
@@ -266,16 +249,33 @@ class HomeViewController: UIViewController {
         
         // test code
         
-//        self.userData = try? JSONDecoder().decode(CommitsSummary.self, from: GitItApi.commitsSummary(UserInfo.username!).sampleData)
+        self.userData = try? JSONDecoder().decode(CommitsSummary.self, from: GitItApi.commitsSummary(UserInfo.username!).sampleData)
         
-        DispatchQueue.main.async {
-            GitItApiProvider().fetchCommitsSummary { result in
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(let commitSummary):
-                    self.userData = commitSummary
-                }
+//        DispatchQueue.main.async {
+//            GitItApiProvider().fetchCommitsSummary { result in
+//                switch result {
+//                case .failure(let error):
+//                    print(error)
+//                case .success(let commitSummary):
+//                    self.userData = commitSummary
+//                }
+//            }
+//        }
+    }
+    
+    func updateView() {
+        updateUserData()
+        if let data = userData {
+            if let name = userNameLabel, let todayCommit = todayCommitCountLabel, let commitStreak = commitStreakCountLabel, let grass = grassCollectionView {
+                name.text = data.username
+                todayCommit.text = "\(data.commitsRecord.count)"
+                commitStreak.text = "\(data.commitStreak)"
+                
+//            ImageCache.shared.load(url: key) { profileImage in
+//                imageView.image = profileImage
+//            }"
+                
+                grass.reloadData()
             }
         }
     }
@@ -295,14 +295,7 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func touchUpRefreshButton(_ sender: UIButton) {
-        updateUserData()
-        if let data = userData {
-            if let todayCommit = todayCommitCountLabel, let commitStreak = commitStreakCountLabel, let grass = grassCollectionView {
-                todayCommit.text = "\(data.commitsRecord.count)"
-                commitStreak.text = "\(data.commitStreak)"
-                grass.reloadData()
-            }
-        }
+        updateView()
     }
 }
 
@@ -322,34 +315,34 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         if let records = userData {
-            cell.setColor(commitLevel: records.commitsRecord[indexPath.item].level)
+ //           cell.setColor(commitLevel: records.commitsRecord[indexPath.item].level)
             
             // test code
-//            for userdata in records.commitsRecord {
-//                var dateFormatter: DateFormatter {
-//                    let dateFormatter = DateFormatter()
-//                    dateFormatter.dateFormat = "YYYY-MM-dd"
-//                    return dateFormatter
-//                }
-//
-//                guard let commitDate = dateFormatter.date(from: userdata.date) else { return GrassCollectionViewCell() }
-//                let date = Date()
-//                let nowDateStr = dateFormatter.string(from: date)
-//                let nowDate = dateFormatter.date(from: nowDateStr)
-//                let diff = nowDate!.timeIntervalSince(commitDate)
-//
-//                let indexOfCell = currentDateIndex - Int(diff / (60 * 60 * 24))
-//                if indexOfCell < 0 {
-//                    break
-//                }
-//
-//                if indexPath.item == indexOfCell {
-//                    cell.setColor(commitLevel: userdata.level)
-//                    break
-//                } else {
-//                    cell.setColor(commitLevel: 0)
-//                }
-//            }
+            for userdata in records.commitsRecord {
+                var dateFormatter: DateFormatter {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "YYYY-MM-dd"
+                    return dateFormatter
+                }
+
+                guard let commitDate = dateFormatter.date(from: userdata.date) else { return GrassCollectionViewCell() }
+                let date = Date()
+                let nowDateStr = dateFormatter.string(from: date)
+                let nowDate = dateFormatter.date(from: nowDateStr)
+                let diff = nowDate!.timeIntervalSince(commitDate)
+
+                let indexOfCell = currentDateIndex - Int(diff / (60 * 60 * 24))
+                if indexOfCell < 0 {
+                    break
+                }
+
+                if indexPath.item == indexOfCell {
+                    cell.setColor(commitLevel: userdata.level)
+                    break
+                } else {
+                    cell.setColor(commitLevel: 0)
+                }
+            }
             
         } else {
             cell.setColor(commitLevel: 0)

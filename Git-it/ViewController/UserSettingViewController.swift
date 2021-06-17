@@ -31,6 +31,8 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
         setLeftCancelButton()
         
         self.userNameField?.delegate = self
+        self.navigationController?.delegate = self
+        
         setAutoLayout()
     }
     
@@ -198,4 +200,12 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
     }
     */
 
+}
+
+extension UserSettingViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+        if let controller = viewController as? HomeViewController {
+            controller.updateView()
+        }
+    }
 }
