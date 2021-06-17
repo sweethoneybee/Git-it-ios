@@ -249,18 +249,18 @@ class HomeViewController: UIViewController {
         
         // test code
         
-        self.userData = try? JSONDecoder().decode(CommitsSummary.self, from: GitItApi.commitsSummary(UserInfo.username!).sampleData)
+//        self.userData = try? JSONDecoder().decode(CommitsSummary.self, from: GitItApi.commitsSummary(UserInfo.username!).sampleData)
         
-//        DispatchQueue.main.async {
-//            GitItApiProvider().fetchCommitsSummary { result in
-//                switch result {
-//                case .failure(let error):
-//                    print(error)
-//                case .success(let commitSummary):
-//                    self.userData = commitSummary
-//                }
-//            }
-//        }
+        DispatchQueue.main.async {
+            GitItApiProvider().fetchCommitsSummary { result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                case .success(let commitSummary):
+                    self.userData = commitSummary
+                }
+            }
+        }
     }
     
     func updateView() {
@@ -315,34 +315,34 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         
         if let records = userData {
- //           cell.setColor(commitLevel: records.commitsRecord[indexPath.item].level)
+            cell.setColor(commitLevel: records.commitsRecord[indexPath.item].level)
             
             // test code
-            for userdata in records.commitsRecord {
-                var dateFormatter: DateFormatter {
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "YYYY-MM-dd"
-                    return dateFormatter
-                }
-
-                guard let commitDate = dateFormatter.date(from: userdata.date) else { return GrassCollectionViewCell() }
-                let date = Date()
-                let nowDateStr = dateFormatter.string(from: date)
-                let nowDate = dateFormatter.date(from: nowDateStr)
-                let diff = nowDate!.timeIntervalSince(commitDate)
-
-                let indexOfCell = currentDateIndex - Int(diff / (60 * 60 * 24))
-                if indexOfCell < 0 {
-                    break
-                }
-
-                if indexPath.item == indexOfCell {
-                    cell.setColor(commitLevel: userdata.level)
-                    break
-                } else {
-                    cell.setColor(commitLevel: 0)
-                }
-            }
+//            for userdata in records.commitsRecord {
+//                var dateFormatter: DateFormatter {
+//                    let dateFormatter = DateFormatter()
+//                    dateFormatter.dateFormat = "YYYY-MM-dd"
+//                    return dateFormatter
+//                }
+//
+//                guard let commitDate = dateFormatter.date(from: userdata.date) else { return GrassCollectionViewCell() }
+//                let date = Date()
+//                let nowDateStr = dateFormatter.string(from: date)
+//                let nowDate = dateFormatter.date(from: nowDateStr)
+//                let diff = nowDate!.timeIntervalSince(commitDate)
+//
+//                let indexOfCell = currentDateIndex - Int(diff / (60 * 60 * 24))
+//                if indexOfCell < 0 {
+//                    break
+//                }
+//
+//                if indexPath.item == indexOfCell {
+//                    cell.setColor(commitLevel: userdata.level)
+//                    break
+//                } else {
+//                    cell.setColor(commitLevel: 0)
+//                }
+//            }
             
         } else {
             cell.setColor(commitLevel: 0)
