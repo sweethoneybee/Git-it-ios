@@ -46,7 +46,6 @@ class SocialViewFriendsTableViewCell: UITableViewCell {
     func addUserNameLabel() {
         userNameLabel = { label in
             label.font = UIFont.boldSystemFont(ofSize: CGFloat(30))
-            
             label.translatesAutoresizingMaskIntoConstraints = false
             return label
         }(UILabel())

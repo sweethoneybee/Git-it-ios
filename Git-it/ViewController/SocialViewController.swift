@@ -141,8 +141,6 @@ class SocialViewController: UIViewController, UITableViewDataSource {
         }
         
         if let userData = self.commitsSummary {
-            print("count \(userData.count)")
-    
             cell.userName = userData[indexPath.row].username
             cell.indexOfFriend = indexPath.row + 1
             cell.userCommitRecords = userData[indexPath.row].commitsRecord
@@ -156,7 +154,7 @@ class SocialViewController: UIViewController, UITableViewDataSource {
     @IBAction func touchUpAddButton(_ sender: UIButton) {
         
         if let list = UserInfo.friendList {
-            if list.count > 4 {
+            if list.count > 5 {
                 let alert = UIAlertController(title: "알림", message: "친구는 최대 5명까지 추가 가능합니다.", preferredStyle: UIAlertController.Style.alert)
                 let action = UIAlertAction(title: "확인", style: UIAlertAction.Style.default)
                 alert.addAction(action)
