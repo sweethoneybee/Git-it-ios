@@ -9,9 +9,10 @@ import Foundation
 
 struct UserInfo {
     enum Key: String {
-        case username = "USER_NAME"
-        case friendList = "FRIEND_LIST"
-        case profileImageData = "USER_PHOTO_IMAGE_DATA"
+        case username
+        case friendList
+        case profileImageData
+        case profileImageKey
     }
     
     private init() {}
@@ -34,12 +35,16 @@ struct UserInfo {
         }
     }
     
-    static var profileImageData: Data? {
+    static var profileImageKey: URL? {
         get {
-            return UserDefaults.standard.data(forKey: Key.profileImageData.rawValue)
+            guard let urlStr = UserDefaults.standard.string(forKey: Key.profileImageKey.rawValue) else {
+                return nil
+            }
+            return URL(string: urlStr)
         }
         set {
-            UserDefaults.standard.set(newValue, forKey: Key.profileImageData.rawValue)
+            let value = newValue?.absoluteString
+            return UserDefaults.standard.set(value, forKey: Key.profileImageKey.rawValue)
         }
     }
     
