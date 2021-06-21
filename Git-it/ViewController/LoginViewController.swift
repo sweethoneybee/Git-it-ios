@@ -134,17 +134,3 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return false
     }
 }
-
-extension String {
-    func hasCharacters() -> Bool {
-        do {
-            let regex = try NSRegularExpression(pattern: "^[0-9a-zA-Z_]$", options: .caseInsensitive)
-            if regex.firstMatch(in: self, options: NSRegularExpression.MatchingOptions.reportCompletion, range: NSRange(location: 0, length: self.count)) != nil {
-                return true
-            }
-        } catch {
-            return false
-        }
-        return false
-    }
-}
