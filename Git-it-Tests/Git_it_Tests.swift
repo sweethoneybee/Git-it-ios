@@ -11,20 +11,20 @@ import XCTest
 class Git_it_Tests: XCTestCase {
     let username = "Joe"
     let friendList = ["Ahn", "Lee", "Ha", "Hoe"]
-    let imageData = UIImage(systemName: "person.fill")?.pngData()
+    let imageKey = "www.google.com"
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
         UserInfo.username = username
         UserInfo.friendList = friendList
-        UserInfo.profileImageData = imageData
+        UserInfo.profileImageKey = URL(string: imageKey)!
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         UserInfo.remove(forKey: .username)
         UserInfo.remove(forKey: .friendList)
-        UserInfo.remove(forKey: .profileImageData)
+        UserInfo.remove(forKey: .profileImageKey)
     }
 
     func testUserInfoClass() throws {
@@ -34,17 +34,17 @@ class Git_it_Tests: XCTestCase {
         // given
         let newUserName = "Jeong"
         let newFriendList = ["Kim", "Park", "Seo"]
-        let newImageData = UIImage(systemName: "folder")?.pngData()
+        let newProfileImageKey = URL(string:"www.queness.com/resources/images/png/apple_web.png")!
         
         // when
         UserInfo.username = newUserName
         UserInfo.friendList = newFriendList
-        UserInfo.profileImageData = newImageData
+        UserInfo.profileImageKey = newProfileImageKey
         
         // then
         XCTAssertEqual(newUserName, UserInfo.username)
         XCTAssertEqual(newFriendList, UserInfo.friendList)
-        XCTAssertEqual(newImageData, UserInfo.profileImageData)
+        XCTAssertEqual(newProfileImageKey, UserInfo.profileImageKey)
     }
 
     func testUpdatFriendList() throws {
@@ -59,12 +59,4 @@ class Git_it_Tests: XCTestCase {
         XCTAssertEqual(oldFrinedList?.count, self.friendList.count)
         XCTAssertEqual(updateFriendList, UserInfo.friendList)
     }
-    
-//    func testPerformanceExample() throws {
-//        // This is an example of a performance test case.
-//        measure {
-//            // Put the code you want to measure the time of here.
-//        }
-//    }
-
 }

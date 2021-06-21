@@ -44,12 +44,12 @@ extension GitItApi {
                 "commitsRecord": [
                   {
                     "count": 3,
-                    "date": "2019-05-05",
+                    "date": "2021-05-05",
                     "level": 1
                   },
                   {
                     "count": 5,
-                    "date": "2019-05-06",
+                    "date": "2021-05-06",
                     "level": 2
                   }
                 ]
@@ -60,13 +60,18 @@ extension GitItApi {
                 "commitsRecord": [
                   {
                     "count": 3,
-                    "date": "2019-05-05",
+                    "date": "2021-05-05",
                     "level": 1
                   },
                   {
                     "count": 5,
-                    "date": "2019-05-06",
+                    "date": "2021-05-06",
                     "level": 2
+                  },
+                  {
+                    "count": 5,
+                    "date": "2021-05-07",
+                    "level": 3
                   }
                 ]
               }

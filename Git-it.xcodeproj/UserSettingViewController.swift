@@ -205,7 +205,6 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
     */
 
 }
-<<<<<<< HEAD
 
 extension UserSettingViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
@@ -214,5 +213,3 @@ extension UserSettingViewController: UINavigationControllerDelegate {
         }
     }
 }
-=======
->>>>>>> main
