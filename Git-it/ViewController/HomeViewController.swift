@@ -76,15 +76,16 @@ class HomeViewController: UIViewController {
     func addProfileImage() {
         profileImage = { imgView in
             imgView.translatesAutoresizingMaskIntoConstraints = false
-            guard let key = UserInfo.profileImageData else {
+            
+            guard let key = UserInfo.profileImageKey else {
+                //set default
                 imgView.image = UIImage(named: "profile.png")
                 return imgView
             }
-            imgView.image = UIImage(data: key)
             
-//            ImageCache.shared.load(url: key) { profileImage in
-//                imageView.image = profileImage
-//            }
+            ImageCache.shared.load(url: key) { profileImage in
+                imgView.image = profileImage
+            }
             
             return imgView
         }(UIImageView())
