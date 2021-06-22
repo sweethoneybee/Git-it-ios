@@ -45,7 +45,6 @@ class HomeViewController: UIViewController {
         addCommitStreakLabel()
         addGrassCollectionView()
         addRefreshButton()
-        collectionViewCellFlowLayout()
         setAutoLayout()
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(touchUpUsernameLabel(_:)))
@@ -78,7 +77,7 @@ class HomeViewController: UIViewController {
             imgView.translatesAutoresizingMaskIntoConstraints = false
             
             guard let key = UserInfo.profileImageKey else {
-                //set default
+                // set default
                 imgView.image = UIImage(named: "profile.png")
                 return imgView
             }
@@ -165,7 +164,7 @@ class HomeViewController: UIViewController {
     }
     
     func addGrassCollectionView() {
-        grassCollectionView = GrassCollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+        grassCollectionView = GrassCollectionView(frame: CGRect.zero, collectionViewLayout: collectionViewCellFlowLayout())
         grassCollectionView?.translatesAutoresizingMaskIntoConstraints = false
         grassCollectionView?.register(GrassCollectionViewCell.self, forCellWithReuseIdentifier: GrassCollectionViewCell.identifier)
         grassCollectionView?.delegate = self
@@ -177,6 +176,10 @@ class HomeViewController: UIViewController {
         if let grass = grassCollectionView {
             self.view.addSubview(grass)
         }
+        
+        DispatchQueue.main.async {
+            self.grassCollectionView?.scrollToItem(at: IndexPath(item: self.currentDateIndex - 1, section: 0), at: .centeredHorizontally, animated: false)
+            }
     }
     
     func addRefreshButton() {
@@ -230,18 +233,13 @@ class HomeViewController: UIViewController {
         }
     }
     
-    func collectionViewCellFlowLayout() {
+    func collectionViewCellFlowLayout() -> UICollectionViewFlowLayout {
         let flowLayout: UICollectionViewFlowLayout
         flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumInteritemSpacing = 2
         flowLayout.minimumLineSpacing = 2
         flowLayout.scrollDirection = .horizontal
-
-        self.grassCollectionView?.collectionViewLayout = flowLayout
-        
-        DispatchQueue.main.async {
-            self.grassCollectionView?.scrollToItem(at: IndexPath(item: self.currentDateIndex - 1, section: 0), at: .centeredHorizontally, animated: false)
-            }
+        return flowLayout
     }
     
     // MARK: - Function
@@ -249,32 +247,43 @@ class HomeViewController: UIViewController {
     func updateUserData() {
         
         // test code
+//        if let name = UserInfo.username {
+//            self.userData = try? JSONDecoder().decode(CommitsSummary.self, from: GitItApi.commitsSummary(name).sampleData)
+//            updateView()
+//        }
         
-//        self.userData = try? JSONDecoder().decode(CommitsSummary.self, from: GitItApi.commitsSummary(UserInfo.username!).sampleData)
-        
-        DispatchQueue.main.async {
-            GitItApiProvider().fetchCommitsSummary { result in
-                switch result {
-                case .failure(let error):
-                    print(error)
-                case .success(let commitSummary):
-                    self.userData = commitSummary
+        GitItApiProvider().fetchCommitsSummary { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+            case .success(let commitSummary):
+                self.userData = commitSummary
+                DispatchQueue.main.async {
+                    self.updateView()
                 }
             }
         }
     }
     
     func updateView() {
-        updateUserData()
         if let data = userData {
             if let name = userNameLabel, let todayCommit = todayCommitCountLabel, let commitStreak = commitStreakCountLabel, let grass = grassCollectionView {
                 name.text = data.username
                 todayCommit.text = "\(data.commitsRecord.count)"
                 commitStreak.text = "\(data.commitStreak) days"
                 
-//            ImageCache.shared.load(url: key) { profileImage in
-//                imageView.image = profileImage
-//            }"
+                if data.profileImageUrl != UserInfo.profileImageKey?.absoluteString {
+                    UserInfo.profileImageKey = URL(string: data.profileImageUrl)
+                }
+                if let imageView = profileImage {
+                    if let key = UserInfo.profileImageKey {
+                        ImageCache.shared.load(url: key) { profileImage in
+                            imageView.image = profileImage
+                        }
+                    } else {
+                        imageView.image = UIImage(named: "profile.png")
+                    }
+                }
                 
                 grass.reloadData()
             }
@@ -296,7 +305,7 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func touchUpRefreshButton(_ sender: UIButton) {
-        updateView()
+        updateUserData()
     }
 }
 
