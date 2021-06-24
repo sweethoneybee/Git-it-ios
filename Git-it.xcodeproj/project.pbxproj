@@ -24,9 +24,15 @@
 		4054FCED264C40880021ADD4 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4054FCEA264C3EE80021ADD4 /* UserInfo.swift */; };
 		40A6001126537FDF00F503FB /* GitItApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A6001026537FDF00F503FB /* GitItApiProvider.swift */; };
 		40A6001326553A3200F503FB /* CodableStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40A6001226553A3200F503FB /* CodableStructs.swift */; };
+		40D708352669184400F120EF /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D708342669184400F120EF /* ImageCache.swift */; };
+		40D70837266930CA00F120EF /* ImageCache_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D70836266930CA00F120EF /* ImageCache_Tests.swift */; };
 		8AD53A370C33430FC683BA1A /* Pods_Git_it.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 749690446B456AA87F2148D7 /* Pods_Git_it.framework */; };
 		C01AA7F6264D140A008AA5C5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01AA7F5264D140A008AA5C5 /* LoginViewController.swift */; };
 		C03674072666680200FF5C84 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03674062666680200FF5C84 /* StatsViewController.swift */; };
+		F490EFEF266761DC00E0E5C6 /* SocialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EFEE266761DC00E0E5C6 /* SocialViewController.swift */; };
+		F490EFF12667624400E0E5C6 /* SocialViewFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EFF02667624400E0E5C6 /* SocialViewFriendsTableViewCell.swift */; };
+		F490EFF32667627C00E0E5C6 /* GrassCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EFF22667627C00E0E5C6 /* GrassCollectionViewCell.swift */; };
+		F490EFF5266762A600E0E5C6 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EFF4266762A600E0E5C6 /* StringExtension.swift */; };
 		F4F6597426511C010088932B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6597326511C010088932B /* UserSettingViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -61,11 +67,17 @@
 		4054FCEA264C3EE80021ADD4 /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		40A6001026537FDF00F503FB /* GitItApiProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitItApiProvider.swift; sourceTree = "<group>"; };
 		40A6001226553A3200F503FB /* CodableStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableStructs.swift; sourceTree = "<group>"; };
+		40D708342669184400F120EF /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		40D70836266930CA00F120EF /* ImageCache_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache_Tests.swift; sourceTree = "<group>"; };
 		41069D3A304E4C96E78BACE3 /* Pods-Git-it.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Git-it.release.xcconfig"; path = "Target Support Files/Pods-Git-it/Pods-Git-it.release.xcconfig"; sourceTree = "<group>"; };
 		44574CB07ED315AC10A6C62D /* Pods-Git-it.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Git-it.debug.xcconfig"; path = "Target Support Files/Pods-Git-it/Pods-Git-it.debug.xcconfig"; sourceTree = "<group>"; };
 		749690446B456AA87F2148D7 /* Pods_Git_it.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Git_it.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C01AA7F5264D140A008AA5C5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		C03674062666680200FF5C84 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+		F490EFEE266761DC00E0E5C6 /* SocialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialViewController.swift; sourceTree = "<group>"; };
+		F490EFF02667624400E0E5C6 /* SocialViewFriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialViewFriendsTableViewCell.swift; sourceTree = "<group>"; };
+		F490EFF22667627C00E0E5C6 /* GrassCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrassCollectionViewCell.swift; sourceTree = "<group>"; };
+		F490EFF4266762A600E0E5C6 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringExtension.swift; path = "Git-it/ViewController/Cell/StringExtension.swift"; sourceTree = SOURCE_ROOT; };
 		F4F6597326511C010088932B /* UserSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -140,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				4054FCEA264C3EE80021ADD4 /* UserInfo.swift */,
+				40D708342669184400F120EF /* ImageCache.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -155,10 +168,12 @@
 		4045B5BC263E499E00BE3A31 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				F490EFED266760D500E0E5C6 /* Cell */,
 				4045B5A7263E498A00BE3A31 /* ViewController.swift */,
 				C01AA7F5264D140A008AA5C5 /* LoginViewController.swift */,
 				F4F6597326511C010088932B /* UserSettingViewController.swift */,
 				C03674062666680200FF5C84 /* StatsViewController.swift */,
+				F490EFEE266761DC00E0E5C6 /* SocialViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -166,6 +181,7 @@
 		4045B5BD263E49A400BE3A31 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				F490EFF4266762A600E0E5C6 /* StringExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -192,6 +208,7 @@
 				4054FCE2264C3EB90021ADD4 /* Git_it_Tests.swift */,
 				401A733B2666007D0087592E /* GitItApiProviderTest.swift */,
 				4054FCE4264C3EB90021ADD4 /* Info.plist */,
+				40D70836266930CA00F120EF /* ImageCache_Tests.swift */,
 			);
 			path = "Git-it-Tests";
 			sourceTree = "<group>";
@@ -214,6 +231,15 @@
 				41069D3A304E4C96E78BACE3 /* Pods-Git-it.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		F490EFED266760D500E0E5C6 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F490EFF02667624400E0E5C6 /* SocialViewFriendsTableViewCell.swift */,
+				F490EFF22667627C00E0E5C6 /* GrassCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,17 +408,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				C01AA7F6264D140A008AA5C5 /* LoginViewController.swift in Sources */,
+				F490EFF12667624400E0E5C6 /* SocialViewFriendsTableViewCell.swift in Sources */,
+				F490EFF5266762A600E0E5C6 /* StringExtension.swift in Sources */,
 				4045B5A8263E498A00BE3A31 /* ViewController.swift in Sources */,
 				4045B5A4263E498A00BE3A31 /* AppDelegate.swift in Sources */,
+				F490EFEF266761DC00E0E5C6 /* SocialViewController.swift in Sources */,
 				40A6001126537FDF00F503FB /* GitItApiProvider.swift in Sources */,
 				401A7340266612E30087592E /* MockData.swift in Sources */,
 				4045B5A6263E498A00BE3A31 /* SceneDelegate.swift in Sources */,
+				40D708352669184400F120EF /* ImageCache.swift in Sources */,
 				401A733E26660D2A0087592E /* MockURLSession.swift in Sources */,
 				4054FCED264C40880021ADD4 /* UserInfo.swift in Sources */,
 				F4F6597426511C010088932B /* UserSettingViewController.swift in Sources */,
 				4045B5AE263E498A00BE3A31 /* Git_it.xcdatamodeld in Sources */,
 				C03674072666680200FF5C84 /* StatsViewController.swift in Sources */,
 				40A6001326553A3200F503FB /* CodableStructs.swift in Sources */,
+				F490EFF32667627C00E0E5C6 /* GrassCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +433,7 @@
 			files = (
 				4054FCE3264C3EB90021ADD4 /* Git_it_Tests.swift in Sources */,
 				401A733C2666007D0087592E /* GitItApiProviderTest.swift in Sources */,
+				40D70837266930CA00F120EF /* ImageCache_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
