@@ -19,7 +19,7 @@ class StatsViewController: UIViewController {
     var labelTotalCommitsContent: UILabel?
     var labelAverageContent: UILabel?
     var labelMaxCommitStreakContent: UILabel?
-        
+            
     // MARK: - override method
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -208,27 +208,21 @@ class StatsViewController: UIViewController {
     
     // MARK: - objc method
     @objc func refreshStats() {
-        let statsData: StatsData?
-            
-//        GitItApiProvider().fetchStatsData { result in
-//            switch result {
-//            case .success(let statsData):
-//                self.statsData = statsData
-//            case .failure(let error):
-//                print(error.errorDescription!)
-//            }
-//        }
-        statsData = try? JSONDecoder().decode(StatsData.self, from: GitItApi.stats("jeong").sampleData)
-
-        labelRankContent!.text = statsData?.tier
-        if let totalCommits = statsData?.totalCommits {
-            labelTotalCommitsContent!.text = String(totalCommits)
-        }
-        if let average = statsData?.average {
-            labelAverageContent!.text = String(average)
-        }
-        if let max = statsData?.maxCommitStreak {
-            labelMaxCommitStreakContent!.text = String(max)
+       // var statsData: StatsData?
+        
+        let gititApiProvider: GitItApiProvider = .init(session: MockURLSession(makeRequestFail: false, fetchCase: .stats))
+        DispatchQueue.main.async {
+            gititApiProvider.fetchStatsData { result in
+                switch result {
+                case .success(let statsData):
+                    self.labelRankContent!.text = statsData.tier
+                    self.labelTotalCommitsContent!.text = String(statsData.totalCommits)
+                    self.labelAverageContent!.text = String(statsData.average)
+                    self.labelMaxCommitStreakContent!.text = String(statsData.maxCommitStreak)
+                case .failure(let error):
+                    print(error.errorDescription!)
+                }
+            }
         }
     }
 }
