@@ -29,10 +29,13 @@
 		8AD53A370C33430FC683BA1A /* Pods_Git_it.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 749690446B456AA87F2148D7 /* Pods_Git_it.framework */; };
 		C01AA7F6264D140A008AA5C5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01AA7F5264D140A008AA5C5 /* LoginViewController.swift */; };
 		C03674072666680200FF5C84 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03674062666680200FF5C84 /* StatsViewController.swift */; };
+		F441EACE2673230000AD26E2 /* GrassCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EACD2673230000AD26E2 /* GrassCollectionViewCell.swift */; };
+		F441EAD02676DC7A00AD26E2 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EACF2676DC7A00AD26E2 /* StringExtension.swift */; };
 		F490EFEF266761DC00E0E5C6 /* SocialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EFEE266761DC00E0E5C6 /* SocialViewController.swift */; };
 		F490EFF12667624400E0E5C6 /* SocialViewFriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EFF02667624400E0E5C6 /* SocialViewFriendsTableViewCell.swift */; };
 		F490EFF32667627C00E0E5C6 /* GrassCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EFF22667627C00E0E5C6 /* GrassCollectionViewCell.swift */; };
 		F490EFF5266762A600E0E5C6 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EFF4266762A600E0E5C6 /* StringExtension.swift */; };
+		F441EACB2673211E00AD26E2 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EACA2673211E00AD26E2 /* HomeViewController.swift */; };
 		F4F6597426511C010088932B /* UserSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F6597326511C010088932B /* UserSettingViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +81,7 @@
 		F490EFF02667624400E0E5C6 /* SocialViewFriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialViewFriendsTableViewCell.swift; sourceTree = "<group>"; };
 		F490EFF22667627C00E0E5C6 /* GrassCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrassCollectionViewCell.swift; sourceTree = "<group>"; };
 		F490EFF4266762A600E0E5C6 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringExtension.swift; path = "Git-it/ViewController/Cell/StringExtension.swift"; sourceTree = SOURCE_ROOT; };
+		F441EACA2673211E00AD26E2 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F4F6597326511C010088932B /* UserSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -174,6 +178,7 @@
 				F4F6597326511C010088932B /* UserSettingViewController.swift */,
 				C03674062666680200FF5C84 /* StatsViewController.swift */,
 				F490EFEE266761DC00E0E5C6 /* SocialViewController.swift */,
+				F441EACA2673211E00AD26E2 /* HomeViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -419,11 +424,18 @@
 				40D708352669184400F120EF /* ImageCache.swift in Sources */,
 				401A733E26660D2A0087592E /* MockURLSession.swift in Sources */,
 				4054FCED264C40880021ADD4 /* UserInfo.swift in Sources */,
+				F441EAD02676DC7A00AD26E2 /* StringExtension.swift in Sources */,
 				F4F6597426511C010088932B /* UserSettingViewController.swift in Sources */,
 				4045B5AE263E498A00BE3A31 /* Git_it.xcdatamodeld in Sources */,
+
 				C03674072666680200FF5C84 /* StatsViewController.swift in Sources */,
+
+				F441EACE2673230000AD26E2 /* GrassCollectionViewCell.swift in Sources */,
+
 				40A6001326553A3200F503FB /* CodableStructs.swift in Sources */,
+				F441EACB2673211E00AD26E2 /* HomeViewController.swift in Sources */,
 				F490EFF32667627C00E0E5C6 /* GrassCollectionViewCell.swift in Sources */,
+				F441EACB2673211E00AD26E2 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

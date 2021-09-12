@@ -42,7 +42,7 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
         userProfileImage = { imageView in
             imageView.translatesAutoresizingMaskIntoConstraints = false
             guard let key = UserInfo.profileImageKey else {
-                // set default
+                //set default
                 imageView.image = UIImage(named: "profile.png")
                 return imageView
             }
@@ -209,8 +209,7 @@ class UserSettingViewController: UIViewController, UITextFieldDelegate {
 extension UserSettingViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         if let controller = viewController as? HomeViewController {
-            // controller.updateView()
-            controller.updateUserData()
+            controller.updateView()
         }
     }
 }
