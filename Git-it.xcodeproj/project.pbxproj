@@ -28,6 +28,7 @@
 		40D70837266930CA00F120EF /* ImageCache_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40D70836266930CA00F120EF /* ImageCache_Tests.swift */; };
 		8AD53A370C33430FC683BA1A /* Pods_Git_it.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 749690446B456AA87F2148D7 /* Pods_Git_it.framework */; };
 		C01AA7F6264D140A008AA5C5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01AA7F5264D140A008AA5C5 /* LoginViewController.swift */; };
+		C03674072666680200FF5C84 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03674062666680200FF5C84 /* StatsViewController.swift */; };
 		F441EACE2673230000AD26E2 /* GrassCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EACD2673230000AD26E2 /* GrassCollectionViewCell.swift */; };
 		F441EAD02676DC7A00AD26E2 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F441EACF2676DC7A00AD26E2 /* StringExtension.swift */; };
 		F490EFEF266761DC00E0E5C6 /* SocialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F490EFEE266761DC00E0E5C6 /* SocialViewController.swift */; };
@@ -75,6 +76,7 @@
 		44574CB07ED315AC10A6C62D /* Pods-Git-it.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Git-it.debug.xcconfig"; path = "Target Support Files/Pods-Git-it/Pods-Git-it.debug.xcconfig"; sourceTree = "<group>"; };
 		749690446B456AA87F2148D7 /* Pods_Git_it.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Git_it.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C01AA7F5264D140A008AA5C5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		C03674062666680200FF5C84 /* StatsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
 		F490EFEE266761DC00E0E5C6 /* SocialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialViewController.swift; sourceTree = "<group>"; };
 		F490EFF02667624400E0E5C6 /* SocialViewFriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialViewFriendsTableViewCell.swift; sourceTree = "<group>"; };
 		F490EFF22667627C00E0E5C6 /* GrassCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrassCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				4045B5A7263E498A00BE3A31 /* ViewController.swift */,
 				C01AA7F5264D140A008AA5C5 /* LoginViewController.swift */,
 				F4F6597326511C010088932B /* UserSettingViewController.swift */,
+				C03674062666680200FF5C84 /* StatsViewController.swift */,
 				F490EFEE266761DC00E0E5C6 /* SocialViewController.swift */,
 				F441EACA2673211E00AD26E2 /* HomeViewController.swift */,
 			);
@@ -424,7 +427,11 @@
 				F441EAD02676DC7A00AD26E2 /* StringExtension.swift in Sources */,
 				F4F6597426511C010088932B /* UserSettingViewController.swift in Sources */,
 				4045B5AE263E498A00BE3A31 /* Git_it.xcdatamodeld in Sources */,
+
+				C03674072666680200FF5C84 /* StatsViewController.swift in Sources */,
+
 				F441EACE2673230000AD26E2 /* GrassCollectionViewCell.swift in Sources */,
+
 				40A6001326553A3200F503FB /* CodableStructs.swift in Sources */,
 				F441EACB2673211E00AD26E2 /* HomeViewController.swift in Sources */,
 				F490EFF32667627C00E0E5C6 /* GrassCollectionViewCell.swift in Sources */,
