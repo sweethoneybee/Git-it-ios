@@ -69,6 +69,31 @@ class GitItApiProvider {
         self.session = session
     }
     
+    // test
+    func checkId(username: String, completion: @escaping (Result<CommitsSummary, ApiError>) -> Void) {
+        let request = URLRequest(url: GitItApi.commitsSummary(username).url)
+        let task: URLSessionTask = self.session.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(ApiError.clientError(error)))
+                return
+            }
+            
+            guard let httpResponse = response as? HTTPURLResponse,
+               (200...399).contains(httpResponse.statusCode) else {
+                completion(.failure(ApiError.serverError(response)))
+                return
+            }
+            
+            if let data = data, let commitsSummary = try? JSONDecoder().decode(CommitsSummary.self, from: data) {
+                completion(.success(commitsSummary))
+                return
+            }
+            completion(.failure(ApiError.unknownError))
+        }
+        
+        task.resume()
+    }
+    
     func fetchCommitsSummary(completion: @escaping (Result<CommitsSummary, ApiError>) -> Void) {
         guard let username = UserInfo.username else {
             completion(.failure(ApiError.noUsernameError))
