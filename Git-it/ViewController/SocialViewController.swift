@@ -14,6 +14,8 @@ class SocialViewController: UIViewController, UITableViewDataSource {
     var friendAddButton: UIButton?
     var friendsTableView: UITableView?
     var commitsSummary: [SocialCommitsSummary]?
+    private var action: UIAlertAction!
+    private var friendIdTypedInAlert: String?
     
     // MARK: - ViewLoad
 
@@ -113,6 +115,8 @@ class SocialViewController: UIViewController, UITableViewDataSource {
                 }
             }
         }
+        
+        self.friendsTableView?.reloadData()
     }
     
     func setAutoLayout() {
@@ -149,6 +153,16 @@ class SocialViewController: UIViewController, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // delete friend
+        }
+    }
+    
     // MARK: - IBAction
 
     @IBAction func touchUpAddButton(_ sender: UIButton) {
@@ -161,9 +175,76 @@ class SocialViewController: UIViewController, UITableViewDataSource {
                 self.present(alert, animated: true, completion: nil)
             } else {
                 // move to next view
+                let alert = UIAlertController(title: "친구 추가", message: "깃 허브 아이디를 입력해주세요.", preferredStyle: .alert)
+                
+                alert.addTextField { textField in
+                    let searchButton = UIButton()
+                    searchButton.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
+                    
+                    textField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+                    searchButton.addTarget(self, action: #selector(self.isExistId), for: .touchUpInside)
+                    
+                    textField.rightView = searchButton
+                    textField.rightViewMode = .always
+                }
+                
+                action = UIAlertAction(title: "추가", style: .default) { _ in
+                    guard let textField = alert.textFields else {
+                        preconditionFailure("fail to load textfield")
+                    }
+                    
+                    let friendId = textField[0].text
+                    
+                    // api를 통해 친구 아이디 추가
+                    print("added : \(String(describing: friendId))")
+                    
+                    
+                    
+                    self.updateFriends()
+                }
+                
+                let cancel = UIAlertAction(title: "취소", style: .cancel) { _ in
+                    print("cancel button clicked")
+                }
+                
+                action.isEnabled = false
+                alert.addAction(action)
+                alert.addAction(cancel)
+                
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
+    
+    @objc private func textFieldDidChange(_ field: UITextField) {
+        self.friendIdTypedInAlert = field.text
+    }
+    
+    @objc func isExistId(sender: UIButton) {
+        guard let friendId = self.friendIdTypedInAlert else {
+            action.isEnabled = false
+            return
+        }
+        
+        DispatchQueue.main.async {
+            
+            guard let name = self.friendIdTypedInAlert else {
+                self.action.isEnabled = false
+                return
+            }
+            
+            GitItApiProvider().checkId(username: name) { result in
+                switch result {
+                case .failure(let error):
+                    print(error)
+                    self.action.isEnabled = false
+                case .success(_):
+                    self.action.isEnabled = true
+                }
+            }
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
